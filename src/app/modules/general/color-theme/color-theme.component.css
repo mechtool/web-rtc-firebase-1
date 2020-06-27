@@ -1,0 +1,15 @@
+.color-theme-container{
+    display: flex;
+}
+.color-item{
+    width: 40px;/*40px*/
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+mat-icon.check-icon{
+    width: 36px!important;
+    height: 36px!important;
+}

@@ -1,0 +1,5 @@
+<div class="color-theme-container">
+	<div class="color-item" *ngFor="let item of colorService.colorItems" [style.backgroundColor]="item.backgroundColor" (click)="onClickColor(item)">
+		<mat-icon class="check-icon" *ngIf="item.active" [style.color]="item.iconColor" svgIcon="check1"></mat-icon>
+	</div>
+</div>
