@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, HostBinding, HostListener, Inject, NgZone, PLATFORM_ID} from '@angular/core';
+import {ChangeDetectorRef, Component, HostBinding, HostListener, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {Select} from "@ngxs/store";
 import {AppContextState} from "./store/states";
 import {Observable} from "rxjs";
@@ -9,15 +9,20 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {MatIconRegistry} from "@angular/material/icon";
 import {OnlineService} from "./services/online.service";
 import {isPlatformBrowser} from "@angular/common";
+import {SettingsDefaultService} from "./services/settings-default.service";
+import {FirebaseService} from "./services/firebase.service";
+import {FirebaseAuthService} from "./services/firebase-auth.service";
+import {FirebaseDatabaseService} from "./services/firebase-database.service";
+import {FirebaseMessagingService} from "./services/firebase-messaging.service";
+import {FirebaseStorageService} from "./services/firebase-storage.service";
 
 @Component({
   selector: 'app-root',
  templateUrl : './app.component.html',
     styleUrls : ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy{
     public subscribes = [];
-    
     @HostBinding('class') public appColorClass;
     //Потеря фокуса
     @HostListener('window:blur') public onBlur(){
@@ -32,24 +37,35 @@ export class AppComponent {
     @Select(AppContextState.appUser) public appUser$ : Observable<Contact> ;
     @Select(AppContextState.onLine) public onLine$ : Observable<boolean> ;
     
+    //todo Не убирать не активные сервисы. Они запускаются инжектором зависимостей и инициализируют сервисные механизмы. Очередность запусков сервисов соответствует очередности следования их в параметрах конструктора : порядок запуска важен!!!
+    // #
+    // # Сервис активации firebase
+    // # Сервис аутентификации
+    // # Сервис базы данных
+    // # Сервис Push firebase сообщений
+    // # Сервис firebase Storage
+    // # Сервис настроек по умолчанию
+    // # Сервис цветовой схемы
+    // # Сервис  активности сети
+    //
     constructor(
-	public changeRef : ChangeDetectorRef,
+        public firebaseService : FirebaseService,
+	public firebaseAuth : FirebaseAuthService,
+	public firebaseDatabase : FirebaseDatabaseService,
+	public firebaseMessaging : FirebaseMessagingService,
+	public firebaseStorage : FirebaseStorageService,
+	public settingsService : SettingsDefaultService,
 	public colorTheme : ColorThemeService,
+	public onlineService : OnlineService,
 	public router : Router,
 	public zone : NgZone,
 	public sanitizer : DomSanitizer,
+	public changeRef : ChangeDetectorRef,
 	public iconRegistry : MatIconRegistry,
-	public onLineService : OnlineService,
-	@Inject(PLATFORM_ID) private platformId: Object) {
-	
-	if (isPlatformBrowser(this.platformId)) {
-	    this.initializeServices();
-	}
-    }
+	@Inject(PLATFORM_ID) private platformId: Object) {}
     
-    async initializeServices(){
-	await this.onLineService.initialize();
-	await this.colorTheme.initialize();
+    ngOnDestroy(){
+	this.subscribes.forEach(sub => sub.unsubscribe());
     }
     
     ngOnInit() {
@@ -77,7 +93,7 @@ export class AppComponent {
 		{name : 'wifi', link: '/assets/icons/wifi.svg'},
 		{name : 'visibility', link: '/assets/icons/visibility.svg'},
 		{name : 'visibility-off', link: '/assets/icons/visibility_off.svg'},
-		
+		{name : 'phone', link: '/assets/icons/phone1.svg'},
 		{name : 'message', link: '/assets/icons/message.svg'},
 		{name : 'play', link: '/assets/icons/multimedia.svg'},
 		{name : 'delete', link: '/assets/icons/close.svg'},
@@ -85,7 +101,9 @@ export class AppComponent {
 		{name : 'check', link: '/assets/icons/tick.svg'},
 		{name : 'check1', link: '/assets/icons/tick1.svg'},
 		{name : 'search', link: '/assets/icons/search.svg'},
-		
+		{name : 'help', link: '/assets/icons/question.svg'},
+	 
+	 
 		{name : '0', link: '/assets/icons/paper-plane.svg'},
 		{name : '1', link: '/assets/icons/video-camera.svg'},
 		{name : '2', link: '/assets/icons/microphone.svg'},
@@ -93,15 +111,25 @@ export class AppComponent {
 	    ].forEach(item => {
 		this.iconRegistry.addSvgIcon(item.name, this.sanitizer.bypassSecurityTrustResourceUrl(item.link));
 	    }) ;
-	    
+	    //Подписка на изменение пользователя
 	    this.subscribes.push(this.appUser$.subscribe(appUser => {
-		if(appUser && appUser._id){
-
-		} else{
-		    //todo Пользователь вышел из приложения, запустить функции отчистки несохраняемых данных
-		    //Выйти из приложения с переходом на страницу авторизации
-		    //this.zone.run(()=> this.router.navigateByUrl('/authorization')).catch(err => console.log(err));
-		}
+		let t = setTimeout(()=>{
+		       clearTimeout(t);
+		    //Пользователь вошел в приложение
+		    if(appUser && appUser.uid){
+		      //Пользователь вошео в приложение
+	
+			    this.zone.run(()=> this.router.navigate(['application', 'splash'] ).catch(err => console.log(err)));
+	
+		    } else if(appUser === null){
+			 //todo Реализовать проверку параметра вызова на случай входа в приложение через мобильную ссылку
+			
+		        //todo Пользователь вышел из приложения (или еще не вошел), запустить функции отчистки несохраняемых данных
+			
+			//Перейти на страницу авторизации
+			this.zone.run(()=> this.router.navigate(['authorization', 'enter'] ).catch(err => console.log(err)));
+		    }
+		}, 1000);
 	    })) ;
 	    this.subscribes.push(this.appColorClass$.subscribe((appColorClass : any) => {
 		if (!/null|undefined/.test(appColorClass)) {
@@ -109,15 +137,12 @@ export class AppComponent {
 		    this.changeRef.markForCheck();
 		}
 	    }));
+	    //Подписка на отслеживание активности сети
 	    this.subscribes.push(this.onLine$.subscribe((onLine : boolean) => {
 		if (onLine == false) {
-		   // this.router.navigate(['/application/online', {previousUrl: this.router.url}]) ;
+		   this.router.navigate(['/application/online', {previousUrl: this.router.url}]) ;
 		}
 	    }));
 	}
-    }
-    
-    ngOnDestroy(){
-	this.subscribes.forEach(sub => sub.unsubscribe());
     }
 }

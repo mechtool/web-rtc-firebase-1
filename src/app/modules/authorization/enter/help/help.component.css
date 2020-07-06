@@ -1,0 +1,18 @@
+div.help-container{
+    height: 100%;
+}
+div.help-base{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    padding: 20px 40px;
+}
+mat-toolbar{
+    height: 60px;
+}
+div.help-base{
+    height: calc(100% - 60px);
+    box-sizing: border-box;
+}
+

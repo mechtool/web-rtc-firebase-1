@@ -5,7 +5,11 @@
   To learn more about this file see: https://angular.io/config/solution-tsconfig.
 */
 {
-  "files": [],
+  "compilerOptions": {
+    "types": ["node"],
+    "experimentalDecorators": true
+  },
+  "files": ["file.ts"],
   "references": [
     {
       "path": "./tsconfig.app.json"

@@ -1,0 +1,51 @@
+<div class="main-block-phone">
+	<mat-toolbar class="phone-toolbar" [color]="'primary'">
+		<span class="header">Авторизация по номеру</span>
+		<span class="example-spacer"></span>
+		<button mat-icon-button (click)="onHelp()" routerLink="/authorization/enter/help" [queryParams]="{type: 'phone'}">
+			<mat-icon class="help-icon" svgIcon="help"></mat-icon>
+		</button>
+	</mat-toolbar>
+	<div class="phone-container" (keydown.enter)="onClickPhoneButton()">
+		<div class="phone-block" [ngClass]="{active : phoneBlockClass}" [formGroup]="phoneGroup" >
+			<div class="phone-form-container">
+				<div class="form-field-container">
+					<mat-form-field class="phone-field" appearance="fill">
+						<mat-label>Код страны</mat-label>
+						<mat-select formControlName="codeControl" [(value)]="selected" >
+							<mat-select-trigger class="phone-code-trigger">
+								<div class="base-content">
+									<img class="state-img" [alt]="selected.alt"  [src]="selected.src">
+									<span class="location">{{selected.class.toUpperCase()}}</span>
+									<span class="state-code">{{selected.code}}</span>
+								</div>
+							</mat-select-trigger>
+							<mat-option class="state-code-option" *ngFor="let state of states" [value]="state">
+								<div class="base-content">
+									<img class="state-img" [alt]="state.alt" [src]="state.src">
+									<span class="location">{{state.class.toUpperCase()}}</span>
+									<span class="state-code">{{state.code}}</span>
+								</div>
+							</mat-option>
+						</mat-select>
+						<mat-error *ngIf="phoneGroup.get('codeControl').hasError('required')">Обязательный</mat-error>
+					</mat-form-field>
+					<mat-form-field class="phone-number" appearance="fill">
+						<mat-label>Номер телефона</mat-label>
+						<input matInput formControlName="phoneControl" maxlength="10"  placeholder="**********" (keydown)="onKeyDown($event)" (keyup)="onKeyPress($event)">
+						<mat-icon class="phone-icon" matSuffix svgIcon="phone" color="primary"></mat-icon>
+						<mat-hint>Активный номер телефона</mat-hint>
+						<mat-error *ngIf="phoneGroup.get('phoneControl').hasError('pattern') && !phoneGroup.get('phoneControl').hasError('required')">10 чисел</mat-error>
+						<mat-error *ngIf="phoneGroup.get('phoneControl').hasError('required')">Обязательный</mat-error>
+						<mat-error class="phone-code-error" *ngIf="phoneCodeError">{{phoneCodeError}}</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="button-group" #buttonBlock>
+					<button id="phone-ready" class="phone-ready" type="submit" mat-raised-button color="primary" [disabled]="this.activeStage" [style.cursor]="this.cursor" (click)="onClickPhoneButton()">{{phoneButtonText}}</button>
+					<span class="example-spacer"></span>
+					<button class="phone-cancel" mat-raised-button color="primary" (click)="onCancelButton()">Отмена</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

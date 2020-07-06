@@ -64,8 +64,7 @@ export class LocalStorageState {
 export interface AppContextModel {
     appColorClass : string;
     beforeInstall : boolean | Event;
-    appUser : Contact,
-    
+    appUser : Contact | null,
     permissions : any[],
     apiKeys : any;
     stunTurnConfig : any;

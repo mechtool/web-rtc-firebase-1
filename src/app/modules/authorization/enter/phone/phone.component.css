@@ -1,0 +1,98 @@
+:host{
+    width: 280px;
+}
+div.main-block-phone{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+div.phone-container{
+    box-sizing: border-box;
+    background-color: #fff;
+    box-shadow: 0 0 10px -8px;
+    padding: 20px 40px;
+    flex: 1 1 0;
+    
+}
+.phone-toolbar{
+    height: 60px;
+}
+mat-icon.help-icon{
+    position: relative;
+    top: -2px;
+
+}
+mat-icon.phone-icon{
+    position: relative;
+    top: -4px
+}
+div.phone-form-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+div.form-field-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+mat-form-field{
+    line-height: 1;
+    width: 100%;
+}
+mat-select-trigger > *{
+    margin-right: 4px;
+}
+mat-select-trigger{
+    display: flex;
+    align-items: center;
+}
+.state-img{
+    height: 18px;
+}
+div.base-content{
+    display: flex;
+    align-items: center;
+}
+.button-group{
+    width: 100%;
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
+}
+.button-group button{
+    width: 49%;
+}
+
+.state-img,.location,.state-code{
+    margin-right: 6px;
+}
+@media  (orientation: landscape) {
+    div.form-field-container{
+        flex-direction: row;
+    }
+    mat-form-field.phone-field{
+        width: 38%;
+    }
+    mat-form-field.phone-number{
+        width: 58%;
+    }
+    div.phone-container{
+        padding: 20px;
+    }
+}
+@media  (orientation: portrait) {
+    div.form-field-container{
+        flex-direction: column;
+    }
+}
+@media  (orientation: landscape) {
+
+    div.button-group{
+        margin-top: 24px;
+    }
+
+}

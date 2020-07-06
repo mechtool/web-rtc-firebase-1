@@ -1,0 +1,78 @@
+.base-application-block{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    height: 100%;
+}
+.base-application-block > div{
+    flex : 1 1 0;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+}
+.b-base{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 0;
+    width: 100%;
+    overflow: visible;
+    top: 50%;
+}
+
+button{
+    width: 50%;
+    height: 50%;
+    transition: 2s;
+    position: absolute;
+    z-index: 2;
+}
+.button-contacts{
+    top: 0;
+    left: 0;
+}
+.button-announcements{
+    top: 0;
+    right: 0;
+}
+.button-messages{
+    left: 0;
+    bottom: 0;
+}
+.button-settings{
+    right: 0;
+    bottom: 0;
+}
+.button-phone{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    border-radius: 50% 50%;
+    z-index: 3;
+}
+.base-application-block > div > button{
+    background-color: #e5e5e5;
+    flex: 1 1 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-button-phone{
+    height: 50px;
+    width: 50px;
+    top: 1px;
+    transform: rotate(135deg);
+    transition: 500ms;
+}
+.button-phone:hover .icon-button-phone{
+    transform: rotate(0deg);
+}
+mat-icon{
+    width: 30%;
+    height: 30%;
+}

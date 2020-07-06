@@ -1,0 +1,93 @@
+:host{
+    width: 80%;
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.c3{
+    animation-delay: 250ms;
+}
+.c4{
+    animation-delay: 500ms;
+}
+.c5{
+    animation-delay: 750ms;
+}
+svg.vert .c3,svg.vert .c4,svg.vert .c5{
+    animation-name: vert;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite
+}
+svg.rad .c3{
+    transform-origin: 180px 250px
+}
+svg.rad .c4{
+    transform-origin: 250px 250px
+}
+svg.rad .c5{
+    transform-origin: 320px 250px
+}
+svg.rad .c3,svg.rad .c4,svg.rad .c5{
+    animation-name: rad;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite
+}
+@keyframes vert {
+    0% {transform: translateY(0px)}
+    5% {transform: translateY(-10px)}
+    10% {transform: translateY(0px)}
+    100% {transform: translateY(0px)}
+}
+@keyframes rad {
+    0% {transform: scale(1)}
+    10% {transform:  scale(0.8)}
+    20% {transform:  scale(1)}
+    100% {transform:  scale(1)}
+}
+
+svg#snap{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -2;
+}
+
+@media (orientation: landscape) {
+    @media (min-height: 550px)  {
+        div.logo-image-container{
+            width: 80%!important;
+        }
+    }
+    @media (max-height: 550px)  {
+        div.logo-image-container{
+            width: 70%!important;
+        }
+    }
+    @media (max-height: 450px)  {
+        div.logo-image-container{
+            width: 60%!important;
+        }
+    }
+    @media (max-height: 350px)  {
+        div.logo-image-container{
+            width: 60%!important;
+        }
+    }
+}
+
+@media (orientation: portrait) {
+    @media (min-height: 500px)  {
+        div.logo-image-container{
+            width: 100%!important;
+        }
+    }
+
+    @media (max-height: 500px)  {
+        div.logo-image-container{
+            width: 90%!important;
+        }
+    }
+}

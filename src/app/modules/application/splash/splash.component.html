@@ -1,0 +1,15 @@
+<div class="base-application-block">
+	<ng-container  *ngFor="let button of buttonBlocks">
+		<button [attr.aria-label]="button.area" mat-flat-button [ngClass]="button.className" *ngIf="!button.badge" routerLink="/application/main" [fragment]="button.fragment">
+			<mat-icon color="primary"  [svgIcon]="button.icon"></mat-icon>
+		</button>
+		<button mat-flat-button [ngClass]="button.className" [attr.aria-label]="button.area" *ngIf="button.badge" routerLink="/application/main" [fragment]="button.fragment">
+			<mat-icon color="primary" [svgIcon]="button.icon" [matBadge]="button.badge" matBadgeSize="large" [matBadgeHidden]="button.hiddenBadge" matBadgeColor="accent" ></mat-icon>
+		</button>
+	</ng-container>
+</div>
+<div class="b-base">
+	<button mat-fab class="button-phone" [attr.aria-label]="'Новое сообщение'" color="primary" routerLink="/application/main" fragment="4">
+		<mat-icon class="icon-button-phone" color="accent" svgIcon="start-phone"></mat-icon>
+	</button>
+</div>

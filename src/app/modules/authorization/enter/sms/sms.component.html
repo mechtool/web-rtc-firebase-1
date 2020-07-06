@@ -1,0 +1,18 @@
+<div class="sms-container">
+	<div class="sms-base">
+		<mat-toolbar color="primary">Введите SMS кода</mat-toolbar>
+		<div class="sms-content-block"  [formGroup]="this.smsFormGroup">
+			<p class="paragraph">{{this.smsText}}</p>
+			<mat-form-field appearance="fill">
+				<mat-label >Код из SMS. 6 цифр</mat-label>
+				<input matInput formControlName="smsControl" maxlength="6" >
+				<mat-error *ngIf="this.smsFormGroup.get('smsControl').hasError('required')">Обязательный</mat-error>
+				<mat-error *ngIf="this.smsFormGroup.get('smsControl').hasError('pattern')" >6 цифр</mat-error>
+			</mat-form-field>
+			<div class="button-block">
+				<button mat-flat-button color="primary" [disabled]="this.smsFormGroup.get('smsControl').hasError('required') || this.smsFormGroup.get('smsControl').hasError('pattern')" (click)="onReady()">Проверить код</button>
+				<button mat-flat-button color="primary" (click)="onCancelSms()">Отмена</button>
+			</div>
+		</div>
+	</div>
+</div>

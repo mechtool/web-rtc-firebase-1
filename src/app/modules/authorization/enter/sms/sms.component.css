@@ -1,0 +1,49 @@
+div.sms-container{
+    height: 100%;
+    position: relative;
+}
+div.sms-base{
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+div.sms-content-block{
+    padding: 20px 40px;
+    height: calc(100% - 56px);
+    box-sizing: border-box;
+}
+div.button-block{
+    margin-top: 32px;
+}
+div.button-block, button{
+    width: 100%;
+}
+mat-form-field{
+    width: 100%;
+    margin-top: 24px;
+}
+p.paragraph{
+    text-align: center;
+}
+div.button-block{
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+}
+div.button-block button{
+    width: 49%;
+}
+
+
+@media  (orientation: landscape) {
+
+    div.button-block{
+        margin-top: 8px;
+    }
+    mat-form-field{
+        margin-top: 0px;
+    }
+
+}
+
+

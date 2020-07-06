@@ -1,0 +1,36 @@
+
+div.enter-form-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+div.enter-form-base{
+    max-width: 300px;
+    min-width: 200px;
+    width: 80%;
+    box-shadow: 0 10px 30px #00000026;
+    position: relative;
+}
+div.field-block{
+    width: 100%;
+}
+div.outlet-container{
+    position: relative;
+    height: 330px;
+    overflow: hidden;
+}
+div.phone-block{
+    padding: 24px;
+}
+@media  (orientation: landscape) {
+    div.enter-form-base{
+        max-width: 500px;
+        width: 80%;
+    }
+    div.outlet-container{
+        height: 250px;
+    }
+}

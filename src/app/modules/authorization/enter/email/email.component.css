@@ -1,0 +1,50 @@
+div.email-container, div.email-content,
+div.email-base, div.email-content-block{
+    height: 100%;
+}
+div.email-content-block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+div.button-block{
+    width: 100%;
+    display: flex;
+    margin-top: 24px;
+
+}
+div.field-block{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+div.button-block button{
+    width: 49%;
+}
+div.email-content-block{
+    padding: 20px 40px;
+    height: calc(100% - 60px);
+    box-sizing: border-box;
+}
+mat-form-field{
+    margin-top: 8px;
+    width: 100%!important;
+}
+@media  (orientation: landscape) {
+
+    mat-form-field {
+        margin-top: 0px;
+    }
+    div.field-block{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    mat-form-field{
+        width: 48%!important;
+    }
+
+    div.email-content-block {
+        padding: 20px;
+    }
+}

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,11 +10,25 @@ import {MaterialModule} from "./modules/material/material.module";
 import {GeneralModule} from "./modules/general/general.module";
 import {NgxsModule} from "@ngxs/store";
 import {AppContextState, LocalStorageState} from "./store/states";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { HttpClientModule} from "@angular/common/http";
+import {AppContextService} from "./services/app-context.service";
+import {AppResolverService} from "./services/app-resolver.service";
+import {ColorThemeService} from "./services/color-theme.service";
+import {OnlineService} from "./services/online.service";
+import {SettingsDefaultService} from "./services/settings-default.service";
+import {AppErrorHandler} from "./services/error-handle.service";
+import {PermissionsService} from "./services/permissions.service";
+import {ScreenInstallService} from "./services/screen-install.service";
+import {StatusColorsService} from "./services/status-colors.service";
+import {FirebaseService} from "./services/firebase.service";
+import {FirebaseAuthService} from "./services/firebase-auth.service";
+import {FirebaseDatabaseService} from "./services/firebase-database.service";
+import {FirebaseStorageService} from "./services/firebase-storage.service";
+import {FirebaseMessagingService} from "./services/firebase-messaging.service";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,11 +36,26 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
       HttpClientModule,
     BrowserAnimationsModule,
       NgxsModule.forRoot([LocalStorageState, AppContextState], {developmentMode: !environment.production}),
-      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+      ServiceWorkerModule.register('service-worker.js', { enabled: true, registrationStrategy : 'registerImmediately' , scope : './' }),
       MaterialModule,
       GeneralModule,
   ],
-  providers: [],
+  providers: [
+    {provide: ErrorHandler, useClass: AppErrorHandler},
+    AppContextService,
+    AppResolverService,
+    ColorThemeService,
+    OnlineService,
+    SettingsDefaultService,
+    PermissionsService,
+    ScreenInstallService,
+    StatusColorsService,
+      FirebaseService,
+      FirebaseAuthService,
+      FirebaseDatabaseService,
+      FirebaseStorageService,
+      FirebaseMessagingService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

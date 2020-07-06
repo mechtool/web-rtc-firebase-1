@@ -28,7 +28,7 @@ export namespace Actions {
     }
     export class AppUserAction {
 	static readonly type = '[App] Change AppUser';
-	constructor(public appUser: Contact) {}
+	constructor(public appUser: Contact | null) {}
     }
     export class AppPermissionsAction {
 	static readonly type = '[App] Set Permissions';

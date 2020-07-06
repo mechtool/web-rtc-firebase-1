@@ -8,7 +8,9 @@ import OnLineAction = Actions.OnLineAction;
 })
 export class OnlineService {
 
-  constructor(public store : Store) { }
+  constructor(public store : Store) {
+      this.initialize();
+  }
   
   initialize(){
       return new Promise((res, rej)=>{

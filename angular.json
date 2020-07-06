@@ -41,7 +41,20 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/web-rtc-firebase",
+            "allowedCommonJsDependencies": [
+              "firebase",
+              "firebase/app",
+              "@firebase/app",
+              "@firebase/util",
+              "@firebase/component",
+              "firebase/component",
+              "@firebase/performance",
+              "@firebase/remote-config",
+              "@firebase/database",
+            "@firebase/firestore",
+            "@firebase/functions"
+            ],
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -49,13 +62,18 @@
             "aot": true,
             "assets": [
               "src/assets",
+              "src/robots.txt",
+              "src/service-worker.js",
               "src/manifest.webmanifest"
             ],
             "styles": [
               "src/custom-themes/custom-theme.scss",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/snap.svg-min.js",
+              "src/assets/js/simplepeer.min.js"
+            ]
           },
           "configurations": {
             "production": {

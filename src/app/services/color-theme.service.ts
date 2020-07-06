@@ -38,7 +38,9 @@ export class ColorThemeService {
       public overlay : 	OverlayContainer,
       public store : Store,
       @Inject(PLATFORM_ID) private platformId: Object,
-) {}
+) {
+        this.initialize();
+    }
     
     initialize(){
 	//Установка значения цвета при старте приложения

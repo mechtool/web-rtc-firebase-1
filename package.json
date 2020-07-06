@@ -1,10 +1,11 @@
 {
   "name": "web-rtc-firebase",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "b": "ng build --prod --sourceMap=true --extractLicenses=false",
+    "lite" : "npm run b & lite-server",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -22,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~10.0.0",
     "@angular/router": "~10.0.0",
     "@angular/service-worker": "~10.0.0",
+    "firebase": "^7.15.5",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "uuidv4": "^6.1.1",
