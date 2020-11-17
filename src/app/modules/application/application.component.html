@@ -1,3 +1,6 @@
+<div class="popup-container" [@notificationAppearance]="(this.popups$ | async).length">
+	<app-popup-notifications *ngFor="let context of this.popups$ | async" [context]="context"></app-popup-notifications>
+</div>
 <div class="application-base" [@fadeAnimation]="this.appContextService.getState(outlet)">
 	<router-outlet #outlet="outlet"></router-outlet>
 </div>

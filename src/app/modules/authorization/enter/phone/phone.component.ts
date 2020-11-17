@@ -1,8 +1,11 @@
-import {ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Inject, NgZone, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppContextService} from "../../../../services/app-context.service";
 import {Router} from "@angular/router";
 import {FirebaseAuthService} from "../../../../services/firebase-auth.service";
+import {LocalizationService} from "../../../../services/localization.service";
+import {NAVIGATOR} from "../../../../classes/Globals";
+import {STATES} from "../../../../classes/Classes";
 
 @Component({
   selector: 'app-phone',
@@ -14,33 +17,22 @@ export class PhoneComponent implements OnInit, OnDestroy{
     public subscriptions = [];
     public phoneBlockClass = true;
     public phoneCodeError : boolean | string = false;
-    public phoneButtonText = 'Готово';
     public cursor = 'not-allowed';
     public activeStage = true;
+    public progress = false;
     public errors = {
-        "auth/captcha-check-failed":"Проверка рекапчи отрицательна." ,
-	"auth/invalid-phone-number" : "Некорректный номер телефона.",
-	"auth/missing-phone-number" : "Отсутствует номер телефона.",
-	"auth/quota-exceeded" : "Превышена квота.",
-	"auth/user-disabled" : "Пользователь неактивен.",
-	"auth/operation-not-allowed" : "Опрерация не разрешена.",
-	"timeout" : "Тайт аут рекапчи истек."
+        "auth/captcha-check-failed": this.localizationService.getText(7) ,
+	"auth/invalid-phone-number" : this.localizationService.getText(8),
+	"auth/missing-phone-number" : this.localizationService.getText(9),
+	"auth/quota-exceeded" : this.localizationService.getText(10),
+	"auth/user-disabled" : this.localizationService.getText(11),
+	"auth/operation-not-allowed" : this.localizationService.getText(12),
+	"timeout" : this.localizationService.getText(13),
     };
     
-    public states = [
-	{class : 'us', code : '+1', src : '/assets/flags-24/002-flag.png', alt : 'Флаг Америки'},
-	{class : 'arm', code : '+374', src : '/assets/flags-24/007-armenia.png', alt : 'Флаг Армении'},
-	{class : 'ru', code : '+7', src : '/assets/flags-24/001-russia.png', alt : 'Флаг России'},
-	{class : 'kz', code : '+7', src : '/assets/flags-24/006-kazakhstan.png', alt : 'Флаг Казахстана'},
-	{class : 'geo', code : '+995', src : '/assets/flags-24/009-georgia.png' , alt : 'Флаг Грузии'},
-	{class : 'de', code : '+49', src : '/assets/flags-24/004-germany.png', alt : 'Флаг Германии'},
-	{class : 'uk', code : '+380', src : '/assets/flags-24/003-ukraine.png', alt : 'Флаг Украины'},
-	{class : 'bel', code : '+375', src : '/assets/flags-24/005-belarus.png', alt : 'Флаг Беларуссии'},
-	{class : 'est' , code : '+372', src : '/assets/flags-24/008-estonia.png', alt : 'Флаг Эстонии'},
-    ] ;
-    
+    public states = STATES;
     public selected = this.states.find((el) => {
-	return window.navigator.language.indexOf(el.class) >= 0;
+	return this.navigator.language.indexOf(el.class) >= 0;
     });
     public phoneGroup = new FormGroup({
 	codeControl: new FormControl(this.selected, [Validators.required]),
@@ -55,13 +47,14 @@ export class PhoneComponent implements OnInit, OnDestroy{
 	private renderer : Renderer2,
 	public changeDetectorRef : ChangeDetectorRef,
 	public firebaseService : FirebaseAuthService,
+	public localizationService : LocalizationService,
+	@Inject(NAVIGATOR) public navigator : Navigator,
     ) {}
     
     ngOnInit(): void {
 	this.subscriptions.push(this.phoneGroup.valueChanges.subscribe(res => {
 	    if(this.phoneGroup.status === 'VALID') {
-
-	    }else if(res === 'INVALID'){
+	    }else if(this.phoneGroup.status === 'INVALID'){
 		this.cursor = 'not-allowed';
 		this.activeStage = true;
 	    }
@@ -86,9 +79,8 @@ export class PhoneComponent implements OnInit, OnDestroy{
 	}else $event.preventDefault();
     }
     
-    onKeyPress($event){
+    onKeyPress(){
         let that = this;
-        this.activeStage = this.phoneGroup.invalid;
 	if(this.phoneGroup.invalid) {
 	    this.cursor = 'not-allowed';
 	}
@@ -101,7 +93,7 @@ export class PhoneComponent implements OnInit, OnDestroy{
 		    'callback': this.onClickPhoneButton,
 		    'expired-callback': function (err) {
 			console.log('Timeout : recaptcha')  ;
-			that.phoneCodeError = 'Ожидание ввода истекло.';
+			that.phoneCodeError = that.localizationService.getText(6);
 			let t = setTimeout(()=> {
 			    clearTimeout(t);
 			    that.onCancelButton();
@@ -114,7 +106,7 @@ export class PhoneComponent implements OnInit, OnDestroy{
 		}).catch(err=> {
 		    console.error(err);
 		    this.appContext.clearRecaptcha();
-		    this.phoneCodeError = this.errors[err.code] || 'Ошибка работы рекапчи.'
+		    this.phoneCodeError = this.errors[err.code] || this.localizationService.getText(14);
 		});
 	    }
 	}
@@ -123,7 +115,7 @@ export class PhoneComponent implements OnInit, OnDestroy{
     onClickPhoneButton() {
         let that = this;
 	if (this.phoneGroup.valid) {
-	    this.activeStage = true;
+	    this.progress = this.activeStage = true;
 	    this.cursor = 'not-allowed';
 	   this.changeDetectorRef.markForCheck();
 	    this.firebaseService.auth.signInWithPhoneNumber(this.phoneGroup.get('codeControl').value.code + this.phoneGroup.get('phoneControl').value, this.appContext.recaptchaVerifier).then((confirmation) => {
@@ -131,6 +123,8 @@ export class PhoneComponent implements OnInit, OnDestroy{
 		// ввести код из полученного сообщения в форму проверки sms кода
 		// confirmationResult.confirm(code).
 		this.appContext.confirmation = confirmation;
+		this.progress = false;
+		this.onHelp();
 		this.ngZone.run(() => {
 		    this.router.navigateByUrl('/authorization/enter/sms').then(res => {
 			this.appContext.clearRecaptcha();
@@ -140,7 +134,7 @@ export class PhoneComponent implements OnInit, OnDestroy{
 		});
 	    }).catch(function (err) {
 		console.error(err);
-		that.phoneCodeError = that.errors[err.code] || 'Ошибка входа в приложение.';
+		that.phoneCodeError = that.errors[err.code] || that.localizationService.getText(15);
 		//sms не отправлено
 		that.activeStage = true;
 		that.cursor = 'not-allowed';

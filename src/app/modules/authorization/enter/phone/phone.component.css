@@ -1,10 +1,8 @@
-:host{
-    width: 280px;
-}
 div.main-block-phone{
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: white;
 }
 div.phone-container{
     box-sizing: border-box;
@@ -14,23 +12,29 @@ div.phone-container{
     flex: 1 1 0;
     
 }
+mat-toolbar{
+    flex: none;
+}
 .phone-toolbar{
     height: 60px;
 }
 mat-icon.help-icon{
     position: relative;
     top: -2px;
-
 }
 mat-icon.phone-icon{
     position: relative;
     top: -4px
 }
+div.phone-block{
+    height: 100%;
+}
 div.phone-form-container{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
+    height: 100%;
 }
 div.form-field-container{
     display: flex;
@@ -59,7 +63,6 @@ div.base-content{
 }
 .button-group{
     width: 100%;
-    margin-top: 32px;
     display: flex;
     justify-content: space-between;
 }
@@ -70,7 +73,7 @@ div.base-content{
 .state-img,.location,.state-code{
     margin-right: 6px;
 }
-@media  (orientation: landscape) {
+@media(orientation: landscape) {
     div.form-field-container{
         flex-direction: row;
     }
@@ -84,15 +87,28 @@ div.base-content{
         padding: 20px;
     }
 }
-@media  (orientation: portrait) {
+@media(orientation: portrait) {
     div.form-field-container{
         flex-direction: column;
     }
 }
-@media  (orientation: landscape) {
-
-    div.button-group{
-        margin-top: 24px;
+@media(max-height : 400px) and (orientation: landscape){
+    div.phone-container{
+        padding: 30px 80px;
     }
-
 }
+
+@media(max-width: 400px) and (orientation: portrait){
+    div.phone-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 50px;
+    }
+    div.phone-block{
+        height: 260px;
+        width: 100%;
+    }
+}
+
+

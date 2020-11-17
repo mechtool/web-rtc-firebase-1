@@ -1,0 +1,13 @@
+<div class="incoming-call-container">
+	<mat-toolbar color="primary">
+		<div class="incoming-call-text" >{{context.text}}</div>
+	</mat-toolbar>
+	<div class="incoming-call-body">
+		<app-contact [context]="context.contact"></app-contact>
+		<div class="example-spacer"></div>
+		<button mat-icon-button [disabled]="!context.active" *ngFor="let button of buttons" (click)="button.listener()"  [style.color]="button.color">
+			<mat-icon>{{button.icon}}</mat-icon>
+		</button>
+	</div>
+</div>
+

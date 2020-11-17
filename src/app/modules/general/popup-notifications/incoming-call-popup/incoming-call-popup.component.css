@@ -1,0 +1,13 @@
+
+.incoming-call-body{
+    display: flex;
+    width: 240px;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 16px;
+    background-color: #eaeaea;
+}
+.extra-icon{
+    margin-right: 6px;
+}
+

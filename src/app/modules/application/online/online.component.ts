@@ -4,6 +4,7 @@ import {Select} from "@ngxs/store";
 import {AppContextState} from "../../../store/states";
 import {Observable} from "rxjs";
 import {ColorThemeService} from "../../../services/color-theme.service";
+import {LocalizationService} from "../../../services/localization.service";
 declare let Snap;
 
 @Component({
@@ -19,6 +20,7 @@ export class OnlineComponent implements OnInit, OnDestroy, AfterViewInit {
     @Select(AppContextState.onLine) public onLine$ : Observable<boolean> ;
     
     constructor(
+        public localizationService : LocalizationService,
         public router : Router,
         public themeColorService : ColorThemeService,
         public route : ActivatedRoute) { }

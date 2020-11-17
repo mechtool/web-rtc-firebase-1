@@ -1,10 +1,10 @@
 {
-  "0":
+  "Default":
   { "iceServers" : [
     { "urls" : "stun:stun.l.google.com:19302" },
     { "urls" : "stun:global.stun.twilio.com:3478?transport=udp" }]
   },
-  "1": {
+  "Host": {
     "iceServers": [
       {
         "urls": "stun:/:3478"
@@ -16,7 +16,7 @@
       }
     ]
   },
-  "2": {
+  "Xirsys": {
     "iceServers": [
       {
         "urls": [

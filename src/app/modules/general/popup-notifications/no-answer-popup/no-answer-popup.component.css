@@ -1,0 +1,13 @@
+.no-answer-body{
+    display: flex;
+    width: 220px;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 16px;
+    background-color: #eaeaea;
+}
+.extra-icon{
+    margin-right: 6px;
+    top : 1px;
+}
+

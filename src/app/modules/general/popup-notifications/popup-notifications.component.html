@@ -1,0 +1,5 @@
+<div class="inner-popup-container" [ngSwitch]="context.type">
+	<app-incoming-call-popup *ngSwitchCase="1" [context]="context"></app-incoming-call-popup>
+	<app-no-answer-popup *ngSwitchCase="2" [context]="context"></app-no-answer-popup>
+	<app-update-popup [context]="context" *ngSwitchCase="3"></app-update-popup>
+</div>

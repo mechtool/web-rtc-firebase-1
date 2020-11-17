@@ -1,0 +1,27 @@
+<div class="application-base-container">
+	<div class="tabs-container" >
+		<mat-toolbar class="button-toolbar" color="primary">
+			<ng-container *ngIf="!media">
+					<ng-container *ngFor="let button of this.buttons; let inx=index" >
+						<button mat-button  [routerLink]="button.link" [routerLinkActive]="'active'" [matTooltip]="button.label">
+							<mat-icon [svgIcon]="button.icon" *ngIf="button.badge"  [matBadge]="button.badge" [matBadgeHidden]="!button.badge" matBadgeColor="accent" matBadgeSize="small"></mat-icon>
+							<mat-icon [svgIcon]="button.icon" *ngIf="!button.badge"></mat-icon>
+						</button>
+						<span *ngIf="inx===3" class="example-spacer"></span>
+					</ng-container>
+			</ng-container>
+			<ng-container  *ngIf="media">
+				<ng-container *ngFor="let button of this.buttons; let inx=index" >
+					<button mat-icon-button  [routerLink]="button.link" [routerLinkActive]="'active'" [matTooltip]="button.label">
+						<mat-icon [svgIcon]="button.icon" *ngIf="button.badge"  [matBadge]="button.badge" [matBadgeHidden]="!button.badge" matBadgeColor="accent" matBadgeSize="small"></mat-icon>
+						<mat-icon [svgIcon]="button.icon" *ngIf="!button.badge"></mat-icon>
+					</button>
+					<span *ngIf="inx===3" class="example-spacer"></span>
+				</ng-container>
+			</ng-container>
+		</mat-toolbar>
+		<div class="outlet-base" [@fadeAnimation]="this.appContext.getState(mainOutlet)">
+			<router-outlet #mainOutlet="outlet"></router-outlet>
+		</div>
+	</div>
+</div>

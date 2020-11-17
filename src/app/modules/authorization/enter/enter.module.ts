@@ -13,21 +13,24 @@ import {SmsComponent} from "./sms/sms.component";
 
 
 @NgModule({
-  declarations: [
-      PhoneComponent,
-      EnterComponent,
-      AnonymouslyComponent,
-      EmailComponent,
-      HelpComponent,
-      SmsComponent,
-  ],
-  imports: [
-    CommonModule,
-      FormsModule,
-      ReactiveFormsModule,
-      MaterialModule,
-      GeneralModule,
-    EnterRoutingModule
-  ]
+    declarations: [
+	PhoneComponent,
+	EnterComponent,
+	AnonymouslyComponent,
+	EmailComponent,
+	HelpComponent,
+	SmsComponent,
+    ],
+    exports: [
+	PhoneComponent
+    ],
+    imports: [
+	CommonModule,
+	FormsModule,
+	ReactiveFormsModule,
+	MaterialModule,
+	GeneralModule,
+	EnterRoutingModule
+    ]
 })
 export class EnterModule { }

@@ -1,1 +1,16 @@
-<p>anonymously works!</p>
+<div class="anon-container" (keydown.enter)="onEnter()">
+	<div class="anon-base">
+		<mat-toolbar class="anon-toolbar" color="primary">
+			<span class="header">{{this.localizationService.getText(33)}}</span>
+			<span class="example-spacer"></span>
+			<button mat-icon-button routerLink="/authorization/enter/help" [queryParams]="{type: 'anonymously'}">
+				<mat-icon class="help-icon" svgIcon="help"></mat-icon>
+			</button>
+		</mat-toolbar>
+		<div class="content-block">
+			<p class="anon-content">{{this.localizationService.getText(34)}}</p>
+			<mat-error class="error" *ngIf="this.note">{{this.note}}</mat-error>
+			<button class="enter-button" mat-flat-button color="primary" (click)="onEnter()">{{this.localizationService.getText(35)}}</button>
+		</div>
+	</div>
+</div>

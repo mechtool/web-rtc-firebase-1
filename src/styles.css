@@ -53,6 +53,27 @@ mat-toolbar, mat-toolbar span.header,
 mat-toolbar div.header{
     font-size: 16px!important;
 }
+
+/*-------------сколлбар приложения----------------*/
+div.contacts-base::-webkit-scrollbar,
+div.settings-base::-webkit-scrollbar{
+    width: 8px;
+}
+
+div.contacts-base::-webkit-scrollbar-thumb,
+div.settings-base::-webkit-scrollbar-thumb{
+    background-color: #c7c7c7;
+    outline: 1px solid #8496a8;
+    border-radius: 4px;
+}
+/*------шрифт бейджика--------*/
+span.mat-badge-content.mat-badge-active{
+    font-size: 10px!important;
+}
 span.mat-badge-content{
     font-size: 12px!important;
+}
+/*-----------шрифт заголовков компонентов--------------*/
+.component-header{
+    font-size: 18px!important;
 }

@@ -75,4 +75,5 @@ button{
 mat-icon{
     width: 30%;
     height: 30%;
+    min-width: 60px;
 }

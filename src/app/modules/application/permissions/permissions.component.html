@@ -3,18 +3,20 @@
 		<div  class="permission-item" *ngFor="let perm of this.permissions$ | async" [ngClass]="perm.className" [@notificationAppearance]="(this.permissions$ | async).length">
 			<ng-container [ngSwitch]="perm.name">
 				<div class="notifications" *ngSwitchCase="'notifications'" [ngClass]="perm.state">
-					<div class="content notifications-content" matRipple (click)="perm.click()">
+					<div class="content notifications-content" matRipple >
 						<mat-icon class="not-icon" color="primary" [color]="perm.state === 'prompt' ? 'primary' : 'warn'"  [svgIcon]="'0'" >  </mat-icon>
-						<p class="prompt" *ngIf="perm.state === 'prompt'">Приложению необходимо получить разрешение пользователя на отправку системных уведомлений. Это разрешение запрашивается один раз и в дальнейшем будет использоваться автоматически.</p>
-						<p class="denied" *ngIf="perm.state === 'denied'">Пользователь не разрешил отправку уведомлений. Работа приложения невозможна. Снимите запрет отправки уведомлений и повторите попытку.</p>
+						<p class="prompt" *ngIf="perm.state === 'prompt'">{{this.localizationService.getText(66)}}</p>
+						<p class="denied" *ngIf="perm.state === 'denied'">{{this.localizationService.getText(67)}}</p>
+						<button color="primary" mat-flat-button (click)="perm.click()">Запросить разрешение</button>
 					</div>
 				</div>
 				<div class="camera" *ngSwitchCase="'camera'" [ngClass]="perm.state">
-					<div class="content camera-content"  matRipple (click)="perm.click()">
+					<div class="content camera-content"  matRipple >
 						<mat-icon [color]="perm.state === 'prompt' ? 'primary' : 'warn'"  [svgIcon]="'1'" > </mat-icon>
 						<mat-icon [color]="perm.state === 'prompt' ? 'primary' : 'warn'"  [svgIcon]="'2'" > </mat-icon>
-						<p class="prompt" *ngIf="perm.state === 'prompt'">Приложению необходимо получить разрешение пользователя на использование камеры и микрофона. Это разрешение запрашивается один раз и в дальнейшем будет использоваться автоматически.</p>
-						<p class="denied" *ngIf="perm.state === 'denied'">Пользователь не разрешил использовать камеру и микрофон. Работа приложения невозможна. Снимите запрет использования камеры и микрофона и повторите попытку.</p>
+						<p class="prompt" *ngIf="perm.state === 'prompt'">{{this.localizationService.getText(68)}}</p>
+						<p class="denied" *ngIf="perm.state === 'denied'">{{this.localizationService.getText(69)}}</p>
+						<button mat-flat-button color="primary" (click)="perm.click()">Запросить разрешение</button>
 					</div>
 				</div>
 			</ng-container>

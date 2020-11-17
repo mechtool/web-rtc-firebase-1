@@ -1,5 +1,16 @@
-import {ChangeDetectorRef, Component, HostBinding, HostListener, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
-import {Select} from "@ngxs/store";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    HostBinding,
+    HostListener,
+    Inject,
+    NgZone,
+    OnDestroy,
+    OnInit,
+    PLATFORM_ID
+} from '@angular/core';
+import {Select, Store} from "@ngxs/store";
 import {AppContextState} from "./store/states";
 import {Observable} from "rxjs";
 import {Contact} from "./classes/Classes";
@@ -9,19 +20,26 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {MatIconRegistry} from "@angular/material/icon";
 import {OnlineService} from "./services/online.service";
 import {isPlatformBrowser} from "@angular/common";
-import {SettingsDefaultService} from "./services/settings-default.service";
 import {FirebaseService} from "./services/firebase.service";
 import {FirebaseAuthService} from "./services/firebase-auth.service";
 import {FirebaseDatabaseService} from "./services/firebase-database.service";
 import {FirebaseMessagingService} from "./services/firebase-messaging.service";
 import {FirebaseStorageService} from "./services/firebase-storage.service";
+import {HardwareService} from "./services/hardware.service";
+import {SettingsDefaultService} from "./services/settings-default.service";
+import {Actions} from "./store/actions";
+import StartedStatusAction = Actions.StartedStatusAction;
+import ChangeDetectorAction = Actions.ChangeDetectorAction;
+import {SwUpdateService} from "./services/sw-update.service";
 
 @Component({
   selector: 'app-root',
  templateUrl : './app.component.html',
-    styleUrls : ['./app.component.css']
+    styleUrls : ['./app.component.css'],
+    changeDetection : ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy{
+    
     public subscribes = [];
     @HostBinding('class') public appColorClass;
     //Потеря фокуса
@@ -54,11 +72,14 @@ export class AppComponent implements OnInit, OnDestroy{
 	public firebaseDatabase : FirebaseDatabaseService,
 	public firebaseMessaging : FirebaseMessagingService,
 	public firebaseStorage : FirebaseStorageService,
-	public settingsService : SettingsDefaultService,
 	public colorTheme : ColorThemeService,
 	public onlineService : OnlineService,
+	public hardwareService : HardwareService,
+	public settingsDefaultService : SettingsDefaultService,
+	public swUpdateService : SwUpdateService,
 	public router : Router,
 	public zone : NgZone,
+	public store : Store,
 	public sanitizer : DomSanitizer,
 	public changeRef : ChangeDetectorRef,
 	public iconRegistry : MatIconRegistry,
@@ -75,7 +96,8 @@ export class AppComponent implements OnInit, OnDestroy{
 	    [
 		{name : 'start-contacts', link: '/assets/icons/avatar.svg'},
 		{name : 'back', link: '/assets/icons/back.svg'},
-		{name : 'menu', link: '/assets/icons/menu.svg'},
+		{name : 'stop', link: '/assets/icons/stop.svg'},
+		{name : 'update', link: '/assets/icons/download.svg'},
 		{name : 'download', link: '/assets/icons/sheet.svg'},
 		{name : 'user', link: '/assets/icons/user.svg'},
 		{name : 'user1', link: '/assets/icons/user1.svg'},
@@ -85,24 +107,23 @@ export class AppComponent implements OnInit, OnDestroy{
 		{name : 'start-messages', link: '/assets/icons/comment.svg'},
 		{name : 'start-settings', link: '/assets/icons/settings.svg'},
 		{name : 'start-phone', link: '/assets/icons/phone.svg'},
-		{name : 'start-home', link: '/assets/icons/home.svg'},
-		{name : 'settings1', link: '/assets/icons/sett.svg'},
+		//{name : 'start-home', link: '/assets/icons/home.svg'},
 		{name : 'settings2', link: '/assets/icons/gear.svg'},
-		{name : 'logout', link: '/assets/icons/exit.svg'},
-		{name : 'chrome', link: '/assets/icons/chrome.svg'},
+		{name : 'exit', link: '/assets/icons/exit.svg'},
+		//{name : 'chrome', link: '/assets/icons/chrome.svg'},
 		{name : 'wifi', link: '/assets/icons/wifi.svg'},
 		{name : 'visibility', link: '/assets/icons/visibility.svg'},
 		{name : 'visibility-off', link: '/assets/icons/visibility_off.svg'},
 		{name : 'phone', link: '/assets/icons/phone1.svg'},
 		{name : 'message', link: '/assets/icons/message.svg'},
-		{name : 'play', link: '/assets/icons/multimedia.svg'},
+	//	{name : 'play', link: '/assets/icons/multimedia.svg'},
 		{name : 'delete', link: '/assets/icons/close.svg'},
 		{name : 'plus', link: '/assets/icons/plus.svg'},
 		{name : 'check', link: '/assets/icons/tick.svg'},
 		{name : 'check1', link: '/assets/icons/tick1.svg'},
 		{name : 'search', link: '/assets/icons/search.svg'},
 		{name : 'help', link: '/assets/icons/question.svg'},
-	 
+		{name : 'sound', link: '/assets/icons/sound.svg'},
 	 
 		{name : '0', link: '/assets/icons/paper-plane.svg'},
 		{name : '1', link: '/assets/icons/video-camera.svg'},
@@ -113,24 +134,23 @@ export class AppComponent implements OnInit, OnDestroy{
 	    }) ;
 	    //Подписка на изменение пользователя
 	    this.subscribes.push(this.appUser$.subscribe(appUser => {
-		let t = setTimeout(()=>{
-		       clearTimeout(t);
 		    //Пользователь вошел в приложение
-		    if(appUser && appUser.uid){
-		      //Пользователь вошео в приложение
-	
-			    this.zone.run(()=> this.router.navigate(['application', 'splash'] ).catch(err => console.log(err)));
-	
-		    } else if(appUser === null){
-			 //todo Реализовать проверку параметра вызова на случай входа в приложение через мобильную ссылку
-			
-		        //todo Пользователь вышел из приложения (или еще не вошел), запустить функции отчистки несохраняемых данных
-			
-			//Перейти на страницу авторизации
-			this.zone.run(()=> this.router.navigate(['authorization', 'enter'] ).catch(err => console.log(err)));
-		    }
-		}, 1000);
+		    if (appUser && appUser.uid && this.router.url.indexOf('application/main/contact-detail') < 0) {
+				this.zone.run(()=> this.router.navigate(['application', 'splash'] )
+					.then(()=>{this.store.dispatch(new StartedStatusAction(true))})
+					.catch(err => console.log(err)));
+		    } else if (appUser === null) {
+				//todo Реализовать проверку параметра вызова на случай входа в приложение через мобильную ссылку
+				//todo Пользователь вышел из приложения (или еще не вошел), запустить функции отчистки несохраняемых данных
+				//Перейти на страницу авторизации
+				this.zone.run(() => this.router.navigate(['authorization', 'enter'])
+					.then(() => {
+					this.store.dispatch(new StartedStatusAction(false))
+					})
+					.catch(err => console.log(err)));
+				}
 	    })) ;
+	    //Подписка на изменение цветовой темы
 	    this.subscribes.push(this.appColorClass$.subscribe((appColorClass : any) => {
 		if (!/null|undefined/.test(appColorClass)) {
 		    this.appColorClass = appColorClass;
@@ -143,6 +163,8 @@ export class AppComponent implements OnInit, OnDestroy{
 		   this.router.navigate(['/application/online', {previousUrl: this.router.url}]) ;
 		}
 	    }));
+	    //Инициализация детектора изменений приложения в хранилще
+	    this.store.dispatch(new ChangeDetectorAction(this.changeRef));
 	}
     }
 }

@@ -1,18 +1,15 @@
 <div class="help-container">
-	<mat-toolbar color="primary">Примечание к авторизации</mat-toolbar>
+	<mat-toolbar color="primary">{{this.localizationService.getText(16)}}</mat-toolbar>
 	<div class="help-base" [ngSwitch]="(this.activatedRoute.queryParams | async).type">
 	    <div class="phone-content" *ngSwitchCase="'phone'">
-		      <p>
-			      После отправки авторизации, на указанный номер придет SMS сообщение, содержимое которого нужно будет внести в поле формы с наименованием "Код из SMS". Если введенный код окажется верным, Вы становитесь зарегистрированным пользователем и сможете приступить к использованию приложения.</p>
+		      <p>{{this.localizationService.getText(17)}}</p>
 	    </div>
 		<div class="email-content" *ngSwitchCase="'email'">
-			<p>
-				После отпрвки авторизации, приложение проверит наличие уже зарегистрированного в системе пользователя с переданными данными, и, если пользователь уже зарегистрирован, то произойдет Ваш вход в приложение с данными зарегистрированного пользователя. Если такого пользователя в системе не существует, то он будет создан, Вы становитесь зарегистрированным пользователем и сможете приступить к использованию приложения.
-			</p>
+			<p>{{this.localizationService.getText(18)}}</p>
 		</div>
 		<div class="anonymously-content" *ngSwitchCase="'anonymously'">
-		
+			<p class="anon-content">{{this.localizationService.getText(19)}}</p>
 		</div>
-		<button mat-flat-button color="primary" (click)="onReady()">Понятно</button>
+		<button mat-flat-button color="primary" (click)="onReady()">{{this.localizationService.getText(21)}}</button>
 	</div>
 </div>

@@ -9,6 +9,7 @@ import BeforeInstallAction = Actions.BeforeInstallAction;
 export class ScreenInstallService {
 
   constructor(public store : Store) {}
+  
   initialize(){
       return new Promise((res, rej)=>{
 	  //Обработка события установки приложения на экран устройства

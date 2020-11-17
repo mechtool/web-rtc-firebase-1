@@ -1,17 +1,18 @@
-<div class="sms-container">
+<div class="sms-container" (keydown.enter)="onReady()">
 	<div class="sms-base">
-		<mat-toolbar color="primary">Введите SMS кода</mat-toolbar>
+		<mat-toolbar class="tool-bar" color="primary">{{this.localizationService.getText(27)}}</mat-toolbar>
+		<mat-progress-bar *ngIf="this.progress" color="accent" mode="indeterminate"></mat-progress-bar>
 		<div class="sms-content-block"  [formGroup]="this.smsFormGroup">
 			<p class="paragraph">{{this.smsText}}</p>
 			<mat-form-field appearance="fill">
-				<mat-label >Код из SMS. 6 цифр</mat-label>
-				<input matInput formControlName="smsControl" maxlength="6" >
-				<mat-error *ngIf="this.smsFormGroup.get('smsControl').hasError('required')">Обязательный</mat-error>
-				<mat-error *ngIf="this.smsFormGroup.get('smsControl').hasError('pattern')" >6 цифр</mat-error>
+				<mat-label >{{this.localizationService.getText(28)}}</mat-label>
+				<input matInput formControlName="smsControl" maxlength="6" (keydown)="onKeyDown($event)" >
+				<mat-error *ngIf="this.smsFormGroup.get('smsControl').hasError('required')">{{this.localizationService.getText(3)}}</mat-error>
+				<mat-error *ngIf="this.smsFormGroup.get('smsControl').hasError('pattern')" >{{this.localizationService.getText(29)}}</mat-error>
 			</mat-form-field>
 			<div class="button-block">
-				<button mat-flat-button color="primary" [disabled]="this.smsFormGroup.get('smsControl').hasError('required') || this.smsFormGroup.get('smsControl').hasError('pattern')" (click)="onReady()">Проверить код</button>
-				<button mat-flat-button color="primary" (click)="onCancelSms()">Отмена</button>
+				<button mat-flat-button color="primary"  [disabled]="this.activeStage" [style.cursor]="this.cursor" (click)="onReady()">{{this.localizationService.getText(1)}}</button>
+				<button mat-flat-button color="primary" (click)="onCancelSms()">{{this.localizationService.getText(2)}}</button>
 			</div>
 		</div>
 	</div>

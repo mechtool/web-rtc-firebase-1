@@ -18,10 +18,10 @@
 </g>
 
 </svg>
-		<p class="denied">Нет сети. Проверте подключение к сети и перезагрузите приложение или работайте автономно.</p>
+		<p class="denied">{{this.localizationService.getText(63)}}</p>
 		<div class="button-block">
-			<button mat-raised-button class="reload" color="warn" (click)="onReload()">Перегрузить</button>
-			<button mat-raised-button color="warn" (click)="onAutonomy()">Автономно</button>
+			<button mat-raised-button class="reload" color="primary" (click)="onReload()">{{this.localizationService.getText(64)}}</button>
+			<button mat-raised-button color="primary" (click)="onAutonomy()">{{this.localizationService.getText(65)}}</button>
 		</div>
 	</div>
 </div>

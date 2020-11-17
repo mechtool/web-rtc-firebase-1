@@ -4,12 +4,12 @@ import {ErrorHandler, NgModule} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import {ServiceWorkerModule, SwUpdate} from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import {MaterialModule} from "./modules/material/material.module";
 import {GeneralModule} from "./modules/general/general.module";
 import {NgxsModule} from "@ngxs/store";
-import {AppContextState, LocalStorageState} from "./store/states";
+import {AppContextState, LocalStorageState, StatusIndicatorsState} from "./store/states";
 import { HttpClientModule} from "@angular/common/http";
 import {AppContextService} from "./services/app-context.service";
 import {AppResolverService} from "./services/app-resolver.service";
@@ -25,6 +25,12 @@ import {FirebaseAuthService} from "./services/firebase-auth.service";
 import {FirebaseDatabaseService} from "./services/firebase-database.service";
 import {FirebaseStorageService} from "./services/firebase-storage.service";
 import {FirebaseMessagingService} from "./services/firebase-messaging.service";
+import {HardwareService} from "./services/hardware.service";
+import {LocalizationService} from "./services/localization.service";
+import {WebRtcService} from "./services/web-rtc.service";
+import {SmsService} from "./services/sms.service";
+import {SwUpdateService} from "./services/sw-update.service";
+import {StreamRecorderService} from "./services/stream-recorder.service";
 
 @NgModule({
   declarations: [
@@ -35,8 +41,8 @@ import {FirebaseMessagingService} from "./services/firebase-messaging.service";
     AppRoutingModule,
       HttpClientModule,
     BrowserAnimationsModule,
-      NgxsModule.forRoot([LocalStorageState, AppContextState], {developmentMode: !environment.production}),
-      ServiceWorkerModule.register('service-worker.js', { enabled: true, registrationStrategy : 'registerImmediately' , scope : './' }),
+      NgxsModule.forRoot([LocalStorageState, AppContextState, StatusIndicatorsState], {developmentMode: !environment.production}),
+      ServiceWorkerModule.register('firebase-messaging-sw.js', { enabled: true, registrationStrategy : 'registerImmediately' , scope : './' }),
       MaterialModule,
       GeneralModule,
   ],
@@ -50,11 +56,17 @@ import {FirebaseMessagingService} from "./services/firebase-messaging.service";
     PermissionsService,
     ScreenInstallService,
     StatusColorsService,
-      FirebaseService,
-      FirebaseAuthService,
-      FirebaseDatabaseService,
-      FirebaseStorageService,
-      FirebaseMessagingService,
+    FirebaseService,
+    FirebaseAuthService,
+    FirebaseDatabaseService,
+    FirebaseStorageService,
+    FirebaseMessagingService,
+    HardwareService,
+    LocalizationService,
+      WebRtcService,
+      SmsService,
+      SwUpdateService,
+      StreamRecorderService,
   ],
   bootstrap: [AppComponent]
 })

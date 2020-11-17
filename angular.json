@@ -51,8 +51,10 @@
               "@firebase/performance",
               "@firebase/remote-config",
               "@firebase/database",
-            "@firebase/firestore",
-            "@firebase/functions"
+              "@firebase/firestore",
+              "@firebase/functions",
+              "uuid",
+              "uuidv4"
             ],
             "outputPath": "dist",
             "index": "src/index.html",
@@ -63,7 +65,7 @@
             "assets": [
               "src/assets",
               "src/robots.txt",
-              "src/service-worker.js",
+              "src/firebase-messaging-sw.js",
               "src/manifest.webmanifest"
             ],
             "styles": [
@@ -94,7 +96,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
+                  "maximumWarning": "3mb",
                   "maximumError": "5mb"
                 },
                 {

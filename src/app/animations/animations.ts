@@ -19,11 +19,11 @@ export const slideAnimation = trigger('slideAnimation', [
 	group([  // block executes in parallel
 	    query(':enter', [
 		style({ transform: 'translateX(100%)' }),
-		animate('400ms ease-in-out', style({ transform: 'translateX(0%)' }))
+		animate('300ms ease-in-out', style({ transform: 'translateX(0%)' }))
 	    ], { optional: true }),
 	    query(':leave', [
 		style({ transform: 'translateX(0%)' }),
-		animate('400ms ease-in-out', style({ transform: 'translateX(-100%)' }))
+		animate('300ms ease-in-out', style({ transform: 'translateX(-100%)' }))
 	    ], { optional: true })
 	])
     ])
@@ -37,17 +37,31 @@ export const fadeAnimation = trigger('fadeAnimation', [
 	),
 	group([
 	    query(':leave', [
-		    animate(700, style({ opacity: 0 }))
+		    style({ opacity: 1 }),
+		    animate(300, style({ opacity: 0 }))
 		],
 		{ optional: true }
 	    ),
 	    query(':enter', [
 		    style({ opacity: 0 }),
-		    animate(700, style({ opacity: 1 }))
+		    animate(300, style({ opacity: 1 }))
 		],
 		{ optional: true }
 	    )
 	])
     ])
 ])
+export const contactSearch = trigger( 'contactSearch', [
+    state( 'true', style( {
+	height : '110px'
+    } ) ),
+    state('false', style({
+	height : '0px',
+    })),
+    transition('* <=> *', [
+	animate( 300 ),
+    ]),
+] );
+
+
 

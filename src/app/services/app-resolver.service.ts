@@ -4,7 +4,6 @@ import {HttpClient} from "@angular/common/http";
 import {Store} from "@ngxs/store";
 import {Actions} from "../store/actions";
 import StunTurnConfigAction = Actions.StunTurnConfigAction;
-import ApiKeysAction = Actions.ApiKeysAction;
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +15,7 @@ export class AppResolverService implements Resolve<any> {
     
   resolve(): Promise<any> {
       return Promise.all([
-	  //Запрос файлов конфигураций
-	  this.http.get('/assets/js/apiKeys.json').toPromise().then(res => {
-	      this.store.dispatch(new ApiKeysAction(res));
-	      return res;
-      }),
-	  //Запрс конфигурации turn сервера
+          //Запрс конфигурации turn сервера
 	  this.http.get('/assets/js/stunTurnConfig.json').toPromise().then(res => {
 	      this.store.dispatch(new StunTurnConfigAction(res));
 	      return res;

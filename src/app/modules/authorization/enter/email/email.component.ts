@@ -1,89 +1,111 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
-import {Store} from "@ngxs/store";
-import {ActivatedRoute} from "@angular/router";
+import {FirebaseAuthService} from "../../../../services/firebase-auth.service";
 import {ColorThemeService} from "../../../../services/color-theme.service";
-import {Actions} from "../../../../store/actions";
-import AppUserAction = Actions.AppUserAction;
-import {Contact, UserContact} from "../../../../classes/Classes";
+import {LocalizationService} from "../../../../services/localization.service";
 
 @Component({
   selector: 'app-email',
   templateUrl: './email.component.html',
   styleUrls: ['./email.component.css']
 })
-export class EmailComponent implements OnInit {
+export class EmailComponent implements OnInit, OnDestroy {
     
+    public subscription = [];
     public cursor = 'not-allowed';
-    public formType = 'singUp';
-    public formHeader = 'Регистрация в приложении';
-    public loginPassError : string = '';
-    public loginButtonText = 'Регистрировать';
+    public reminderColor = '#aaa' ;
+    public reminderDisabled = true;
+    public emailPassError : string = '';
     public activeStage = true;
-    public loginPassGroup = new FormGroup({
-	loginControl: new FormControl('', [Validators.required]),
+    public progress = false;
+    public errors = {
+	"auth/invalid-email" : this.localizationService.getText(36),
+	"auth/user-disabled" : this.localizationService.getText(37),
+	"auth/user-not-found" : this.localizationService.getText(38),
+	"auth/wrong-password" : this.localizationService.getText(39),
+	"auth/email-already-in-use" : this.localizationService.getText(40),
+	"auth/operation-not-allowed": this.localizationService.getText(41),
+	"auth/weak-password": this.localizationService.getText(42),
+	"auth/missing-continue-uri" : this.localizationService.getText(43),
+	"auth/invalid-continue-uri" : this.localizationService.getText(44),
+	"auth/unauthorized-continue-uri": this.localizationService.getText(45)
+    }
+    public emailPassGroup = new FormGroup({
+	emailControl: new FormControl('', [Validators.required, Validators.email]),
 	passControl: new FormControl('', [Validators.required, Validators.minLength(8)]),
     });
     
     constructor(
-	public http : HttpClient,
-	public store : Store,
+        public localizationService : LocalizationService,
+        public colorService : ColorThemeService,
+        public firebaseService : FirebaseAuthService,
 	public changeRef : ChangeDetectorRef,
-	public activatedRoute : ActivatedRoute,
-	public colorService: ColorThemeService,
     ) {
-	this.loginPassGroup.statusChanges.subscribe(res => {
+	this.subscription.push(this.emailPassGroup.statusChanges.subscribe(res => {
 	    this.activeStage = res !== 'VALID';
 	    this.cursor = res === 'VALID' ? 'pointer' : 'not-allowed';
-	})
+	    this.changeRef.detectChanges();
+	}) );
+	this.subscription.push(this.emailPassGroup.get('emailControl').statusChanges.subscribe(res =>{
+	    this.reminderDisabled = res !== 'VALID';
+	    this.reminderColor = this.reminderDisabled ? '#aaa': this.colorService.getThemeColor('backgroundColor');
+	    this.changeRef.detectChanges();
+	    
+	}))
     }
     
     ngOnInit(): void {
-	this.activatedRoute.queryParamMap.subscribe((mode : any) => {
-	    let loginControl = this.loginPassGroup.get('loginControl');
-	    this.formType = mode.params.type;
-	    if(this.formType === 'singIn'){
-		this.formHeader = 'Вход в приложение';
-		this.loginButtonText = 'Войти';
-		loginControl.clearAsyncValidators();
-		
-	    }else{
-		this.formHeader = 'Регистрация в приложении';
-		this.loginButtonText = 'Регистрировать';
-	    }
+
+    }
+    
+    onRemindPass(){
+	let emailValue = this.emailPassGroup.get("emailControl").value;
+	emailValue && this.firebaseService.auth.sendPasswordResetEmail(emailValue, {url : 'https://web-rtc-firebase-60109.firebaseapp.com/',  handleCodeInApp: true}).then(res => {
+	    //Пароль отправлен - направить пользователю сообщение о необходимости проверить почту
+	    this.emailPassError = this.localizationService.getText(46);
+	}).catch(err => {
+	    this.emailPassError = this.errors[err.code] || this.localizationService.getText(47);
+	    //Отобразить полученную ошибку
 	})
     }
     
-    setPasswordUser(user){
-
-	this.store.dispatch(new AppUserAction(user));
+    ngOnDestroy() {
+        this.subscription.forEach(sub => sub.unsubscribe()) ;
+    }
+    
+    checkBack(){
+	this.cursor = 'pointer';
+	this.activeStage = this.progress = false;
+	this.changeRef.detectChanges();
     }
     
     onClickButton(){
-	if(this.loginPassGroup.valid){
-	    this.loginPassError = '';
-	    this.cursor = 'not-allowed' ;
-	    this.activeStage = true;
-	    this.changeRef.markForCheck();
-	    if(/singUp/.test(this.formType)){
-		//регистрация
-		let contact = new Contact({userName : this.loginPassGroup.value.loginControl, password : this.loginPassGroup.value.passControl, backColor : this.colorService.getThemeColor('color')});
-		this.http.post('/create-user',  {user : new UserContact({uid : contact.uid,  contact : contact})}).subscribe(async (userContact : any) => {
-		    //Возвращается созданный пользователь
-		    if(userContact.contact){
-			this.setPasswordUser(userContact.contact);
-		    }else{
-			this.loginPassError = 'Ошибка создания пользователя';
-			this.cursor = 'pointer' ;
-			this.activeStage = false;
-			this.changeRef.markForCheck();
-		    }
+        let email = this.emailPassGroup.value.emailControl,
+	    pass = this.emailPassGroup.value.passControl;
+        this.cursor = 'not-allowed';
+        this.activeStage = this.progress = true;
+        this.emailPassError = this.localizationService.getText(25);
+	this.changeRef.detectChanges();
+	this.firebaseService.auth.signInWithEmailAndPassword(email, pass).then(()=>{
+	    this.emailPassError = this.localizationService.getText(48);
+	}).catch(async (err) => {
+	    if(err.code.indexOf('user-not-found') >= 0){
+		this.emailPassError = this.localizationService.getText(49);
+		this.changeRef.detectChanges();
+		await this.firebaseService.auth.createUserWithEmailAndPassword(email, pass).then(res =>{
+		    this.emailPassError = this.localizationService.getText(50);
+		    this.checkBack();
+		}).catch(err => {
+		    console.error(err);
+		    this.emailPassError =  this.errors[err.code];
+		    this.checkBack();
 		})
-	    }else{
-
+	    }else {
+		console.error(err);
+		this.emailPassError =  this.errors[err.code];
+		this.checkBack();
 	    }
-	}
+	});
     }
 
 }

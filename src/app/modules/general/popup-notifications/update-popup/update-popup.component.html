@@ -1,0 +1,13 @@
+<div class="update-container">
+	<mat-toolbar color="primary">
+		<div class="update-text" >{{context.text}}</div>
+	</mat-toolbar>
+	<div class="update-body">
+		<mat-icon class="extra-icon" color="primary" *ngIf="context.extra.icon" [svgIcon]="context.extra.icon"  [style.backgroundColor]="context.contact.imgColor" ></mat-icon>
+		<div class="contact-name">{{contactName}}</div>
+		<div class="example-spacer"></div>
+		<button mat-icon-button [disabled]="!context.active" *ngFor="let button of buttons" (click)="button.listener()"  [style.color]="button.color">
+			<mat-icon class="go-update">{{button.icon}}</mat-icon>
+		</button>
+	</div>
+</div>

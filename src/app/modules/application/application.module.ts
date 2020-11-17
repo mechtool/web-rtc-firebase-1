@@ -7,6 +7,8 @@ import {OnlineComponent} from "./online/online.component";
 import {PermissionsComponent} from "./permissions/permissions.component";
 import {SplashComponent} from "./splash/splash.component";
 import {MaterialModule} from "../material/material.module";
+import { HardwareComponent } from './hardware/hardware.component';
+import {GeneralModule} from "../general/general.module";
 
 
 @NgModule({
@@ -14,12 +16,14 @@ import {MaterialModule} from "../material/material.module";
       ApplicationComponent,
       OnlineComponent,
       PermissionsComponent,
-      SplashComponent
+      SplashComponent,
+      HardwareComponent
   ],
   imports: [
     CommonModule,
       MaterialModule,
-    ApplicationRoutingModule
+    ApplicationRoutingModule,
+      GeneralModule,
   ]
 })
 export class ApplicationModule { }

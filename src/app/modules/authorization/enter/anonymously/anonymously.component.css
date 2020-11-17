@@ -1,0 +1,43 @@
+div.anon-container{
+    height: 100%;
+    background-color: white;
+}
+div.anon-base{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: stretch;
+    height: 100%;
+}
+div.content-block{
+    padding :20px 40px;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.enter-button{
+    width: 100%;
+}
+mat-toolbar.anon-toolbar{
+    height: 60px;
+    flex: none;
+}
+p{
+    text-align: justify;
+}
+
+@media  (max-width: 400px) and (orientation: portrait){
+     div.content-block{
+         padding: 20px 50px;
+         justify-content: center;
+     }
+}
+@media  (max-height: 400px) and (orientation: landscape){
+    div.content-block{
+        padding: 30px 80px;
+        justify-content: center;
+    }
+}
+

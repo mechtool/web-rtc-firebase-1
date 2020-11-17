@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {LocalizationService} from "../../../services/localization.service";
 
 @Component({
   selector: 'app-splash',
@@ -7,12 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SplashComponent implements OnInit {
     public buttonBlocks = [
-	{className : 'button-contacts', icon : 'start-contacts',  badge : false, fragment : '0', area : 'Контакты'} ,
-	{className : 'button-announcements', icon : 'start-announcements', badge : '1' , hiddenBadge : false,  fragment : '1', area : 'Уведомления'},
-	{className : 'button-messages', icon : 'start-messages', badge : false,  fragment : '2', area : 'Сообщения'} ,
-	{className : 'button-settings', icon : 'start-settings',  badge : false, fragment : '3', area : 'Настройки'} ,
+	{className : 'button-contacts', icon : 'start-contacts',  badge : false, link : '/application/main/contacts', area : this.localizationService.getText(70)} ,
+	{className : 'button-announcements', icon : 'start-announcements', badge : '1' , hiddenBadge : false,  link : '/application/main/announcements', area : this.localizationService.getText(71)},
+	{className : 'button-messages', icon : 'start-messages', badge : false,  link : '/application/main/messages', area : this.localizationService.getText(72)} ,
+	{className : 'button-settings', icon : 'start-settings',  badge : false, link : '/application/main/settings', area : this.localizationService.getText(73)} ,
     ];
-  constructor() {
+  constructor(
+      public localizationService: LocalizationService) {
   }
   
   

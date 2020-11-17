@@ -1,6 +1,19 @@
 div.email-container, div.email-content,
-div.email-base, div.email-content-block{
+div.email-base{
     height: 100%;
+}
+div.email-container{
+    background-color: white;
+}
+mat-toolbar.email-toolbar{
+    height: 60px;
+    flex: none;
+}
+div.email-base{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: stretch;
 }
 div.email-content-block{
     display: flex;
@@ -10,7 +23,6 @@ div.email-content-block{
 div.button-block{
     width: 100%;
     display: flex;
-    margin-top: 24px;
 
 }
 div.field-block{
@@ -21,30 +33,59 @@ div.field-block{
 div.button-block button{
     width: 49%;
 }
+div.email-base-content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-around;
+}
 div.email-content-block{
     padding: 20px 40px;
-    height: calc(100% - 60px);
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    flex :1 1 0;
 }
 mat-form-field{
-    margin-top: 8px;
     width: 100%!important;
 }
+
+div.pass-suffix{
+    display: flex;
+}
+
 @media  (orientation: landscape) {
 
-    mat-form-field {
-        margin-top: 0px;
-    }
-    div.field-block{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+    div.email-content-block{
+        padding: 20px;
     }
     mat-form-field{
         width: 48%!important;
     }
+   div.field-block{
+       flex-direction: row;
+       justify-content: space-between;
+   }
 
-    div.email-content-block {
-        padding: 20px;
+}
+@media(max-width: 400px) and (orientation: portrait){
+    div.email-base-content{
+        height: 260px;
+        justify-content: space-around;
+    }
+    div.email-content-block{
+        padding: 20px 50px;
+        justify-content: center;
+    }
+}
+@media(max-height: 400px) and (orientation: landscape){
+    div.email-content-block{
+        padding: 30px 80px;
+        justify-content: center;
     }
 }

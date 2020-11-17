@@ -1,34 +1,45 @@
-<div class="email-container">
+<div class="email-container"  (keydown.enter)="onClickButton()">
 	<div class="email-base">
-		<mat-toolbar class="email-toolbar" color="primary">Авторизация по почте</mat-toolbar>
+		<mat-toolbar class="email-toolbar" color="primary">
+			<span class="header">{{this.localizationService.getText(51)}}</span>
+			<span class="example-spacer"></span>
+			<button mat-icon-button routerLink="/authorization/enter/help" [queryParams]="{type: 'email'}"  [matTooltip]="this.localizationService.getText(52)">
+				<mat-icon class="help-icon" svgIcon="help"></mat-icon>
+			</button>
+		</mat-toolbar>
+		<mat-progress-bar *ngIf="this.progress" color="accent" mode="indeterminate"></mat-progress-bar>
 		<div class="email-content-block">
-			<div class="field-block">
-				<mat-form-field appearance="fill">
-					<mat-label >Email</mat-label>
-					<input matInput formControlName="loginControl" maxlength="25" >
-					<mat-hint>Email пользователя</mat-hint>
-					<mat-error *ngIf="loginPassGroup.get('loginControl').hasError('required')">Обязательный</mat-error>
-					<mat-error *ngIf="!loginPassGroup.get('loginControl').hasError('required') && loginPassGroup.get('loginControl').hasError('notUniqueLogin')">Логин не уникален</mat-error>
-				</mat-form-field>
-				<mat-form-field class="mat-form-pass-block" appearance="fill">
-					<mat-label>Пароль</mat-label>
-					<input #passInput type="text" matInput formControlName="passControl" maxlength="16" >
-					<mat-hint>Пароль пользователя</mat-hint>
-					<div class="pass-suffix" matSuffix>
-						<button mat-button  mat-icon-button aria-label="Пароль" (click)="passInput.type = passInput.type == 'text' ? 'password' : 'text' ">
-							<mat-icon [style.color]="'#797979'" [svgIcon]="passInput.type == 'text' ? 'visibility-off' : 'visibility'"></mat-icon>
-						</button >
-					</div>
-					<mat-error *ngIf="loginPassGroup.get('passControl').hasError('minlength') && !loginPassGroup.get('passControl').hasError('required')">От 8 до 16 символов
-					</mat-error>
-					<mat-error *ngIf="loginPassGroup.get('passControl').hasError('required')">Обязательный</mat-error>
-				</mat-form-field>
-				<mat-error class="pass-code-error" *ngIf="loginPassError">{{loginPassError}}</mat-error>
-			</div>
-			<div class="button-block">
-				<button class="email-ready" mat-flat-button color="primary">Готово</button>
-				<span class="example-spacer"></span>
-				<button class="email-cancel" mat-flat-button color="primary">Отмена</button>
+			<div class="email-base-content">
+				<div class="field-block" [formGroup]="emailPassGroup">
+					<mat-form-field appearance="fill">
+						<mat-label >Email</mat-label>
+						<input matInput formControlName="emailControl" maxlength="25" >
+						<mat-hint>{{this.localizationService.getText(53)}}</mat-hint>
+						<mat-error *ngIf="emailPassGroup.get('emailControl').hasError('required')">{{this.localizationService.getText(3)}}</mat-error>
+						<mat-error *ngIf="emailPassGroup.get('emailControl').hasError('email') && !emailPassGroup.get('emailControl').hasError('required')">{{this.localizationService.getText(54)}}</mat-error>
+					</mat-form-field>
+					<mat-form-field class="mat-form-pass-block" appearance="fill">
+						<mat-label>{{this.localizationService.getText(55)}}</mat-label>
+						<input #passInput type="text" matInput formControlName="passControl" maxlength="14" >
+						<mat-hint>{{this.localizationService.getText(56)}}</mat-hint>
+						<div class="pass-suffix" matSuffix>
+							<button mat-button  mat-icon-button aria-label="Пароль" [style.color]="this.reminderColor" (click)="passInput.type = passInput.type == 'text' ? 'password' : 'text' " [matTooltip]="this.localizationService.getText(57)">
+								<mat-icon [svgIcon]="passInput.type == 'text' ? 'visibility-off' : 'visibility'" color="primary"></mat-icon>
+							</button >
+							<button mat-button  mat-icon-button aria-label="Напомнить" (click)="onRemindPass()" [matTooltip]="this.localizationService.getText(58)" [style.color]="this.reminderColor"  [disabled]="this.reminderDisabled" >
+								<mat-icon  [svgIcon]="'start-announcements'"></mat-icon>
+							</button >
+						</div>
+						<mat-error *ngIf="emailPassGroup.get('passControl').hasError('minlength') && !emailPassGroup.get('passControl').hasError('required')">{{this.localizationService.getText(59)}}</mat-error>
+						<mat-error *ngIf="emailPassGroup.get('passControl').hasError('required')">{{this.localizationService.getText(3)}}</mat-error>
+					</mat-form-field>
+				</div>
+				<mat-error class="pass-code-error" *ngIf="emailPassError">{{this.emailPassError}}</mat-error>
+				<div class="button-block">
+					<button id="email-ready" class="email-ready" type="submit" mat-raised-button color="primary" [disabled]="this.activeStage" [style.cursor]="this.cursor" (click)="onClickButton()">{{this.localizationService.getText(1)}}</button>
+					<span class="example-spacer"></span>
+					<button class="email-cancel" mat-flat-button color="primary">{{this.localizationService.getText(2)}}</button>
+				</div>
 			</div>
 		</div>
 	</div>

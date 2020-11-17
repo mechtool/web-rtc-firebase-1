@@ -25,7 +25,16 @@ export class EnterComponent implements OnInit {
   }
     
     onSelectedTab(event){
+	this.checkRecaptcha() ;
         this.router.navigateByUrl(this.tabs[event.index].link);
-	}
+    }
+    
+    checkRecaptcha(){
+      //При переходе с одной закладки на другую, нужно удалить имеющуюся рекапчу, если она существует,
+	//Иначе, её видно при выполнении анимации перехода компонента
+	//todo Временное решение
+    let rec = document.querySelector('div.grecaptcha-badge') ;
+    rec && rec.parentElement.remove();
+    }
   
 }

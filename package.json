@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "b": "ng build --prod --sourceMap=true --extractLicenses=false",
-    "lite" : "npm run b & lite-server",
+    "deploy": "npm run b & firebase deploy",
+    "lite": "npm run b & lite-server",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -25,6 +26,7 @@
     "@angular/service-worker": "~10.0.0",
     "firebase": "^7.15.5",
     "rxjs": "~6.5.5",
+    "simple-peer": "^9.7.2",
     "tslib": "^2.0.0",
     "uuidv4": "^6.1.1",
     "zone.js": "~0.10.3"

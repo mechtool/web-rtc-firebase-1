@@ -1,5 +1,6 @@
 div.help-container{
     height: 100%;
+    background-color: white;
 }
 div.help-base{
     display: flex;
@@ -10,9 +11,23 @@ div.help-base{
 }
 mat-toolbar{
     height: 60px;
+    flex : none;
 }
 div.help-base{
     height: calc(100% - 60px);
     box-sizing: border-box;
+}
+p{
+    text-align: justify;
+}
+
+@media(max-height : 400px) and (orientation: landscape){
+    div.help-base{
+        padding: 30px 80px;
+    }
+}
+
+@media(max-width: 400px) and (orientation: portrait){
+
 }
 
