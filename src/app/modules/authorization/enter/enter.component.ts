@@ -21,8 +21,7 @@ export class EnterComponent implements OnInit {
       public appContext : AppContextService,
       public router : Router) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
     
     onSelectedTab(event){
 	this.checkRecaptcha() ;

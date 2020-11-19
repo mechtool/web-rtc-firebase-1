@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, Inject, NgZone, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, Renderer2, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppContextService} from "../../../../services/app-context.service";
 import {Router} from "@angular/router";
@@ -6,6 +6,7 @@ import {FirebaseAuthService} from "../../../../services/firebase-auth.service";
 import {LocalizationService} from "../../../../services/localization.service";
 import {NAVIGATOR} from "../../../../classes/Globals";
 import {STATES} from "../../../../classes/Classes";
+import {isPlatformBrowser} from "@angular/common";
 
 @Component({
   selector: 'app-phone',
@@ -32,7 +33,7 @@ export class PhoneComponent implements OnInit, OnDestroy{
     
     public states = STATES;
     public selected = this.states.find((el) => {
-	return this.navigator.language.indexOf(el.class) >= 0;
+	return this.navigator.language.toLowerCase().indexOf(el.class) >= 0;
     });
     public phoneGroup = new FormGroup({
 	codeControl: new FormControl(this.selected, [Validators.required]),
@@ -49,6 +50,7 @@ export class PhoneComponent implements OnInit, OnDestroy{
 	public firebaseService : FirebaseAuthService,
 	public localizationService : LocalizationService,
 	@Inject(NAVIGATOR) public navigator : Navigator,
+	@Inject(PLATFORM_ID) private platformId: Object
     ) {}
     
     ngOnInit(): void {

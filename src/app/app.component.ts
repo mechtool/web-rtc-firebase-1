@@ -147,7 +147,9 @@ export class AppComponent implements OnInit, OnDestroy{
 					.then(() => {
 					this.store.dispatch(new StartedStatusAction(false))
 					})
-					.catch(err => console.log(err)));
+					.catch(err => {
+					    console.log(err)
+					}));
 				}
 	    })) ;
 	    //Подписка на изменение цветовой темы

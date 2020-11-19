@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import {BehaviorSubject} from "rxjs";
 
 export const STATES = [
-    {class : 'us', code : '+1', src : '/assets/flags-24/002-flag.png', alt : 'Флаг Америки'},
+    {class : 'en', code : '+1', src : '/assets/flags-24/002-flag.png', alt : 'Флаг Америки'},
     {class : 'arm', code : '+374', src : '/assets/flags-24/007-armenia.png', alt : 'Флаг Армении'},
     {class : 'ru', code : '+7', src : '/assets/flags-24/001-russia.png', alt : 'Флаг России'},
     {class : 'kz', code : '+7', src : '/assets/flags-24/006-kazakhstan.png', alt : 'Флаг Казахстана'},
