@@ -1,0 +1,42 @@
+<div class="phone-form-container">
+	<div class="form-field-container" [formGroup]="phoneGroup" >
+		<mat-form-field class="phone-field" appearance="fill">
+			<mat-label>{{this.localizationService.getText(20)}}</mat-label>
+			<mat-select formControlName="codeControl" [(value)]="selected" >
+				<mat-select-trigger class="phone-code-trigger">
+					<div class="base-content">
+						<img class="state-img" [alt]="selected.alt"  [src]="selected.src">
+						<span class="location">{{selected.class.toUpperCase()}}</span>
+						<span class="state-code">{{selected.code}}</span>
+					</div>
+				</mat-select-trigger>
+				<mat-option class="state-code-option" *ngFor="let state of states" [value]="state">
+					<div class="base-content">
+						<img class="state-img" [alt]="state.alt" [src]="state.src">
+						<span class="location">{{state.class.toUpperCase()}}</span>
+						<span class="state-code">{{state.code}}</span>
+					</div>
+				</mat-option>
+			</mat-select>
+			<mat-hint>{{this.localizationService.getText(20)}}</mat-hint>
+			<mat-error *ngIf="phoneGroup.get('codeControl').hasError('required')">{{this.localizationService.getText(3)}}</mat-error>
+		</mat-form-field>
+		<mat-form-field class="phone-number" appearance="fill">
+			<mat-label>{{this.localizationService.getText(4)}}</mat-label>
+			<input matInput formControlName="phoneControl" [matAutocomplete]="auto" required  (keydown)="onKeyDown($event)" (input)="onKeyup()" maxlength="10"  placeholder="**********" >
+			<button class="button-search" mat-icon-button matSuffix [disabled]="this.buttonSearchDisabled" (click)="this.changeType.emit(0)">
+				<mat-icon class="phone-icon"  svgIcon="search" color="primary"></mat-icon>
+			</button>
+			<mat-autocomplete #auto="matAutocomplete" >
+				<mat-option class="opt-contact" *ngFor="let context of this.optionCollection$ | async" [value]="context.userName" (click)="optionSelected(context)" [style.backgroundColor]="inCollection(context)">
+					<div class="option-autocomplete">
+						<app-contact [context]="context"></app-contact>
+					</div>
+				</mat-option>
+			</mat-autocomplete>
+			<mat-hint>{{this.localizationService.getText(4)}}</mat-hint>
+			<mat-error *ngIf="phoneGroup.get('phoneControl').hasError('pattern') && !phoneGroup.get('phoneControl').hasError('required')">{{this.localizationService.getText(5)}}</mat-error>
+			<mat-error *ngIf="phoneGroup.get('phoneControl').hasError('required')">{{this.localizationService.getText(3)}}</mat-error>
+		</mat-form-field>
+	</div>
+</div>

@@ -40,6 +40,9 @@ body {
     margin: 0;
     height: 100vh;
     user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
 }
 *:not(mat-icon),.mat-tooltip{
     font-family: "Oswald-L", sans-serif!important;
@@ -77,3 +80,12 @@ span.mat-badge-content{
 .component-header{
     font-size: 18px!important;
 }
+mat-radio-group{
+    outline: none;
+}
+
+formly-field.sourceMoney mat-radio-button.mat-radio-button{
+    margin-right: 16px!important;
+}
+
+

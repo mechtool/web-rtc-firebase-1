@@ -1,0 +1,19 @@
+<div class="hardware-container">
+	<div class="hardware-base" matRipple>
+		<div class="hardware-inner">
+			<div class="icons-block">
+				<ng-container *ngFor="let hard of this.hardware">
+					<mat-icon *ngIf="hard.state" [svgIcon]="hard.icon" color="primary"></mat-icon>
+				</ng-container>
+			</div>
+			<p class="text1">{{this.text1}}</p>
+			<p class="text2" *ngIf="this.text2">{{this.text2}}</p>
+			<ul>
+				<ng-container *ngFor="let hard of this.hardware">
+					<li [ngClass]="hard.className" *ngIf="hard.state">{{hard.text}}</li>
+				</ng-container>
+			</ul>
+			<button class="button" mat-flat-button color="primary" (click)="onClick()">{{this.localizationService.getText(61)}}</button>
+		</div>
+	</div>
+</div>

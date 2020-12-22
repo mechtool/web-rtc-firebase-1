@@ -1,0 +1,28 @@
+div.settings-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    height: 100%;
+}
+div.settings-base{
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+}
+div.settings-outlet{
+    flex: 1 1 0;
+    display: flex;
+    justify-content: stretch;
+    position: relative;
+    flex-direction: column;
+}
+mat-icon.settings-icon{
+    position: relative;
+    top: -2px;
+}
+/*---------------активные кнопки------------------------*/
+button.active{
+    background-color: #ffffff36;
+}

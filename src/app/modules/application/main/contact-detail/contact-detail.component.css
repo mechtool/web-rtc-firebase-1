@@ -1,0 +1,76 @@
+:host{
+    display: block;
+    height: 100%;
+}
+mat-icon.detail-contact{
+    top: -2px;
+    position: relative;
+}
+div.contact-details-container{
+  height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
+    width: 100%;
+}
+
+div.contact-details-base{
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+    flex : 1 1 0;
+    box-sizing: border-box;
+}
+div.meta-item, div.base-contact{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+div.meta-group{
+    width: 100%;
+}
+div.base-contact{
+    flex-direction: column;
+    max-width: 400px;
+}
+div.img-group{
+    display: flex;
+    flex-direction: row;
+}
+mat-form-field.name-field{
+    margin-left: 16px;
+}
+input.name-input{
+    font-size: 18px!important;
+}
+div.block-switch{
+    width: 100%;
+}
+mat-form-field.main{
+    width: 100%!important;
+    height: 60px!important;
+}
+img.contact-img{
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+input.main-input, textarea.main-textarea{
+    font-size: 16px!important;
+}
+div.block-extra-prop{
+    transition: 300ms;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 70px;
+    align-items: center;
+}
+.snack-bar-class{
+    background-color: cornflowerblue;
+}

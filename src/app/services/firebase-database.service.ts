@@ -18,6 +18,7 @@ export class FirebaseDatabaseService {
       this.database.ref('/users').off('value');
       this.database.ref('/contacts').off('value');
       this.database.ref('/messages').off('value');
+      this.database.ref('/smsAccounts').off('value');
       this.database.ref('/announcements').off('value');
 
   }

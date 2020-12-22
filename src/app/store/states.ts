@@ -32,6 +32,7 @@ import PopupsAction = Actions.PopupsAction;
 import CallModeAction = Actions.CallModeAction;
 import DuplicateCallAction = Actions.DuplicateCallAction;
 import UpdateAction = Actions.UpdateAction;
+import AppUserChangedAction = Actions.AppUserChangedAction;
 
 export interface StatusIndicatorsModel {
     hardwareStatus : {state : boolean, result : any[]};
@@ -213,6 +214,7 @@ export interface AppContextModel {
     appColorClass : string; // Цветовой класс приложения
     beforeInstall : boolean | Event;
     appUser : Contact | null,
+    appUserChanged : Contact,
     permissions : any[],
     popups : any[],
     stunTurnConfig : any;
@@ -231,6 +233,7 @@ export interface AppContextModel {
 	appColorClass : '',
 	beforeInstall : false,
 	appUser : undefined,
+	appUserChanged : undefined,
 	permissions : undefined,
 	stunTurnConfig : undefined,
 	changeDetector : undefined,
@@ -255,6 +258,9 @@ export class AppContextState {
     }
     @Action(AppUserAction) setAppUser(ctx: StateContext<AppContextModel>, action: AppUserAction) {
 	ctx.patchState({appUser: action.appUser});
+    }
+    @Action(AppUserChangedAction) setAppUserChanged(ctx: StateContext<AppContextModel>, action: AppUserChangedAction) {
+	ctx.patchState({appUserChanged: action.appUserChanged});
     }
     @Action(AppPermissionsAction) setPermissions(ctx: StateContext<AppContextModel>, action: AppPermissionsAction) {
 	ctx.patchState({ permissions : action.permissions});
@@ -297,6 +303,9 @@ export class AppContextState {
     }
     @Selector() static appUser(state: AppContextModel) {
 	return state.appUser;
+    }
+    @Selector() static appUserChanged(state: AppContextModel) {
+	return state.appUserChanged;
     }
     @Selector() static appColorClass(state: AppContextModel) {
 	return state.appColorClass;

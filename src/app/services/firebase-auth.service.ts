@@ -6,6 +6,7 @@ import AppUserAction = Actions.AppUserAction;
 import * as fb from "firebase";
 import { FirebaseDatabaseService } from './firebase-database.service';
 import { async } from 'rxjs/internal/scheduler/async';
+import AppUserChangedAction = Actions.AppUserChangedAction;
 let firebase = require('firebase/app');
 require("firebase/auth");
 
@@ -36,9 +37,17 @@ export class FirebaseAuthService {
     else {
       //Проверить наличие пользователя в базе данных : если пользователя не существует, то создать его
       let val, ref = this.firebaseDatabase.database.ref(`/users/${user.uid}`);
-      ref.on('value', (snap)=>{
+      ref.once('value', (snap)=>{
         val = snap.val(); 
-        if(val) this.store.dispatch( new AppUserAction(val));
+        if(val) {
+            //Подписка на изменение данных пользователя : для отображения его текущего состояния
+	    this.firebaseDatabase.database.ref(`/users/${user.uid}`).on('child_changed', snap =>{
+		let val = snap.val;
+		val && this.store.dispatch( new AppUserChangedAction(val));
+	    })
+            this.store.dispatch( new AppUserAction(val));
+	    this.store.dispatch( new AppUserChangedAction(val));
+	}
         else ref.set(new Contact(user)); 
       }) ;
     }

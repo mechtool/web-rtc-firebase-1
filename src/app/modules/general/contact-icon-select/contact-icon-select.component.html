@@ -1,0 +1,32 @@
+<div class="icon-select-base">
+	<div class="icon-select-container" (click)="onStopEvent($event)">
+		<mat-toolbar color="primary">
+			<span class="icon-select-header">{{this.localizationService.getText(106)}}</span>
+			<span class="example-spacer"></span>
+			<button mat-icon-button (click)="this.getFromFile($event)" [attr.aria-label]="this.localizationService.getText(107)" [matTooltip]="this.localizationService.getText(107)" >
+				<mat-icon svgIcon="search"></mat-icon>
+			</button>
+		</mat-toolbar>
+		<div class="part-block">
+			<div class="icons-block">
+				<div class="icon-block-div" *ngFor="let icon of this.icons">
+					<div class="first-icon">
+						<mat-icon class="icon-block-img" [svgIcon]="icon.icon"  (click)="icon.listener({event: $event , icon :icon})" [style.backgroundColor]="(this.activeItem | async).color">
+						</mat-icon>
+					</div>
+					<mat-icon class="icon-check-img" *ngIf="icon.active" [svgIcon]="'check1'"></mat-icon>
+				</div>
+			</div>
+			<div class="colors-block">
+				<div class="color-item" *ngFor="let color of this.colors; let inx=index" [style.backgroundColor]="color.color" (click)="onCheckColor({event : $event, inx :inx})">
+					<mat-icon color="#fff" *ngIf="color.active" [svgIcon]="'check1'"></mat-icon>
+				</div>
+			</div>
+			<button class="ready-button" mat-raised-button color="primary" [attr.aria-label]="this.localizationService.getText(1)" [disabled]="this.checkDisabled()"  (click)="onClickButton({event : $event, type : false})">{{this.localizationService.getText(1)}}</button>
+		</div>
+	</div>
+	<div class="icon-select-download-indicator" *ngIf="this.hasSniper">
+		<mat-spinner [diameter]="70" color="primary"></mat-spinner>
+	</div>
+</div>
+<input (click)="onClickInput($event)" #inputFile type="file" [hidden]="true"  name="image" accept="image/jpeg,image/jpg,image/png,image/gif"/>

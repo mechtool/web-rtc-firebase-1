@@ -1,0 +1,42 @@
+div.setting-item-container{
+    height: 46px;
+}
+div.setting-item-base{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+div.setting-item{
+    margin-right: 16px;
+}
+div.setting-item.app-user{
+    flex: 1 1 0;
+}
+div.setting-header{
+    text-indent: 16px;
+}
+div.app-user-item{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+app-contact-item{
+    margin: 0 !important;
+}
+mat-form-field.form-field-select{
+    width: 100px;
+    height: 44px;
+}
+mat-form-field /deep/ div.mat-form-field-flex{
+    padding-top: 0!important;
+}
+mat-form-field /deep/ div.mat-select-arrow-wrapper{
+    transform: none!important;
+}
+mat-icon.icon-user-detailed{
+    position: relative;
+    top: -2px;
+}
+

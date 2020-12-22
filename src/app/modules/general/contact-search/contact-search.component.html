@@ -1,0 +1,20 @@
+<div class="search-contact-container" [style.backgroundColor]="this.colorThemeService.getThemeColor('odd')">
+	<div class="search-contact-base" *ngIf="this.context.type === 0" >
+		<mat-form-field class="search-field" appearance="fill">
+			<mat-label>{{this.localizationService.getText(93)}}</mat-label>
+			<input matInput [matAutocomplete]="auto" [formControl]="this.searchControl" required (input)="onKeyup()">
+			<button class="button-search" mat-icon-button matSuffix (click)="this.context.type = 1">
+				<mat-icon svgIcon="phone" color="primary"> </mat-icon>
+			</button>
+			<mat-autocomplete #auto="matAutocomplete" >
+				<mat-option class="opt-contact" *ngFor="let context of this.optionCollection | async" [value]="context.userName" (click)="optionSelected(context)" [style.backgroundColor]="inCollection(context) ? '#ffc0c0' : '#fff'">
+					<div class="option-autocomplete">
+						<app-contact [context]="context"></app-contact>
+					</div>
+				</mat-option>
+			</mat-autocomplete>
+			<mat-error *ngIf="this.searchControl.hasError('required')">{{this.localizationService.getText(3)}}</mat-error>
+		</mat-form-field>
+	</div>
+	<app-phone-control [mode]="this.context.mode" (changeType)="onChangeType($event)" *ngIf="this.context.type === 1"></app-phone-control>
+</div>

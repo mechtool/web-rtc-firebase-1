@@ -24,12 +24,15 @@
     "@angular/platform-browser-dynamic": "~10.0.0",
     "@angular/router": "~10.0.0",
     "@angular/service-worker": "~10.0.0",
+    "@ngx-formly/schematics": "^5.10.6",
     "firebase": "^7.15.5",
     "rxjs": "~6.5.5",
     "simple-peer": "^9.7.2",
     "tslib": "^2.0.0",
     "uuidv4": "^6.1.1",
-    "zone.js": "~0.10.3"
+    "zone.js": "~0.10.3",
+    "@ngx-formly/core": "^5.0.0",
+    "@ngx-formly/material": "^5.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.0",

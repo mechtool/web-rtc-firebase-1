@@ -1,0 +1,46 @@
+:host{
+    height: 100%;
+}
+div.phone-form-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+div.form-field-container{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+mat-form-field.phone-field{
+    width: 130px;
+    margin-right: 8px;
+}
+mat-form-field.phone-number{
+    width: 100%;
+    min-width: 120px;
+    max-width: 250px;
+}
+div.base-content{
+    display: flex;
+    align-items: center;
+}
+.state-img{
+    height: 14px;
+    margin-right: 6px;
+}
+button.ready{
+    width: 100%;
+}
+button.button-search{
+    background-color: #d8d8d8;
+}
+mat-option{
+    padding: 0 8px;
+}
+@media all and (max-width : 350px) {
+    div.form-field-container{
+        width: 100%;
+    }
+}

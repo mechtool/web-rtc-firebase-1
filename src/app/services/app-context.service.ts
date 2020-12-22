@@ -5,6 +5,7 @@ import {PopupContext, WebRtcContexts} from "../classes/Classes";
 import {AppContextState, LocalStorageState} from "../store/states";
 import {Actions} from "../store/actions";
 import PopupsAction = Actions.PopupsAction;
+import {LocalizationService} from "./localization.service";
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,15 @@ export class AppContextService {
     //Настройки только локального контекста для передачи удаленным контекстам
     public localVideoAudio = {type : 'settings', video : 1, audio : 1};
     //Режимы обновления приложения
-    public updateType = [{text : 'Проверять и обновлять'}, {text : 'Проверять'}, {text : 'Не проверять'}];
+    public updateType = [{text : this.localizationService.getText(110)}, {text :this.localizationService.getText(112)}, {text : this.localizationService.getText(113)}];
     //Все аапаратные средства
     public hardware = this.store.selectSnapshot(AppContextState.hardware);
     
     constructor(
       public store : Store,
-      private _router : Router) {
+      private _router : Router,
+      private localizationService : LocalizationService) {
+        //При запуске сервиса запускается стратегия повтоного использования маршрутов
         this.setReuseStrategy();
     }
     

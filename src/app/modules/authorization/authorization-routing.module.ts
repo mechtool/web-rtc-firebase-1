@@ -6,6 +6,7 @@ const routes: Routes = [
     {path : 'start' ,  component : StartComponent , data : {type : 'start'}},
     {path : 'enter',  loadChildren : ()=> import('./enter/enter.module').then(m => m.EnterModule), data : {type : 'enter'}},
     {path : '', pathMatch : 'full', redirectTo : 'start'},
+    {path : '**', pathMatch : 'full', redirectTo : 'start'},
 ];
 
 @NgModule({

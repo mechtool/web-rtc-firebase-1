@@ -1,0 +1,26 @@
+div.contact-mode-icon{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+div.icon-block{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px!important;
+}
+.icon-block, .img-icon{
+    width: 40px;
+    height: 40px;
+}
+div.user-name-block{
+    text-indent: 8px;
+}
+div.contact-icon-base{
+    display: flex;
+}
+span.user-name-text{
+    font-size: 16px!important;
+}

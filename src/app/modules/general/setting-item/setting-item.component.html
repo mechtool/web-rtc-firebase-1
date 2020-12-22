@@ -1,0 +1,31 @@
+<div class="setting-item-container">
+	<div class="setting-item-base">
+		<div *ngIf="this.context.text" class="setting-header">{{this.context.text}}</div>
+		<div class="setting-item" [ngClass]="this.context.className" [ngSwitch]="this.context.type">
+			<div class="app-user-item" *ngSwitchCase="'user'" >
+				<app-contact-item [context]="this.appUser"></app-contact-item>
+				<button mat-icon-button (click)="onClickAppUser()" color="primary" [matTooltip]="this.localizationService.getText(77)" >
+					<mat-icon class="icon-user-detailed" [svgIcon]="'detailed'"></mat-icon>
+				</button>
+			</div>
+			<app-color-theme *ngSwitchCase="'colorTheme'"></app-color-theme>
+			<mat-slide-toggle class="setting-toggle" *ngSwitchCase="'toggle'" color="primary" [checked]="this.context.value" [disabled]="this.context.disabled" (change)="this.context.listener($event)"></mat-slide-toggle>
+			<ng-container *ngSwitchCase="'button'" >
+				<button mat-icon-button *ngIf="this.context.svg" color="primary" [disabled]="this.context.disabled" (click)="this.context.listener($event)" [matTooltip]="this.context.text">
+					<mat-icon  [ngClass]="this.context.className" [svgIcon]="this.context.svg"></mat-icon>
+				</button>
+				<button *ngIf="this.context.buttonText"  mat-flat-button color="primary" [disabled]="this.context.disabled" (click)="this.context.listener($event)" [matTooltip]="this.context.text">
+					<span class="button-text" >{{this.context.buttonText}}</span>
+				</button>
+			</ng-container>
+			<mat-form-field class="form-field-select" appearance="fill" *ngSwitchCase="'select'">
+				<mat-label>{{context.select.label}}</mat-label>
+				<mat-select [disabled]="context.disabled" [value]="this.context.value" (selectionChange)="context.listener($event.value)">
+					<mat-option *ngFor="let option of context.select.options" [disabled]="option.disabled"  [value]="option.text">
+						{{option.text}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+	</div>
+</div>

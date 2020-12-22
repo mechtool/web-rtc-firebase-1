@@ -1,0 +1,19 @@
+<div class="contacts-container">
+	<mat-toolbar class="contacts-toolbar" color="primary">
+		<span class="contacts-header component-header">{{this.localizationService.getText(70)}}</span>
+		<span class="example-spacer"></span>
+		<ng-container *ngFor="let button of buttons" >
+			<button [attr.aria-label]="button.tip" mat-icon-button (click)="button.listener()" [matTooltip]="button.tip" [disabled]="button.disabled">
+				<mat-icon [svgIcon]="button.icon"></mat-icon>
+			</button>
+		</ng-container>
+	</mat-toolbar>
+	<div class="content-base-contacts" >
+		<div class="search-container" [@contactSearch]="this.contactSearch">
+			<app-contact-search [context]="this.contactSearchContext" ></app-contact-search>
+		</div>
+		<div class="contacts-base" >
+			<app-contact-item (selectedItem)="onSelectedItem($event)" *ngFor="let item of this.contacts$ |async; let inx=index" [context]="item"  [style.backgroundColor]="this.colorService.getNeededColor(inx)"></app-contact-item>
+		</div>
+	</div>
+</div>

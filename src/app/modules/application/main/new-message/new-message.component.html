@@ -1,0 +1,35 @@
+<div class="video-chat-container">
+	<mat-toolbar class="video-chat-toolbar" color="primary">
+		<span class="video-chat-header component-header">{{this.localizationService.getText(74)}}</span>
+		<span class="example-spacer"></span>
+		<button [attr.aria-label]="button.tip" mat-icon-button *ngFor="let button of buttons" (click)="button.listener()" [matTooltip]="button.tip" [disabled]="button.disabled">
+			<mat-icon [svgIcon]="button.icon"></mat-icon>
+		</button>
+	</mat-toolbar>
+	<div class="search-container" [@contactSearch]="this.contactSearch">
+		<app-contact-search [context]="this.contactSearchContext" ></app-contact-search>
+	</div>
+	<div class="video-base-contacts" >
+		<div class="video-chat-base" >
+			<app-contact-item (selectedItem)="onSelectedItem($event)" *ngFor="let item of this.activatedContacts$ |async; let inx=index" [context]="item"  [style.backgroundColor]="this.colorService.getNeededColor(inx)"></app-contact-item>
+		</div>
+	</div>
+	<div class="start-button-block">
+		<div class="buttons-base" >
+			<button mat-fab class="start-video-button" color="primary" [disabled]="!(this.activatedContacts$ | async).length" (click)="this.startMessage('video')">
+				<mat-icon class="start-video-button-icon" svgIcon="start-phone"></mat-icon>
+			</button>
+			<button  mat-fab class="start-text-button" color="accent" [disabled]="(!(this.activatedContacts$ | async).length || this.textMessageControl.hasError('required'))" (click)="this.startMessage('text')">
+				<mat-icon  class="start-text-icon" svgIcon="0"></mat-icon>
+			</button>
+		</div>
+	</div>
+	<div class="text-field-container">
+		<mat-form-field appearance="fill" class="text-area-field">
+			<mat-label>{{this.localizationService.getText(115)}}</mat-label>
+			<textarea class="textarea" matInput mat-autosize [formControl]="this.textMessageControl"></textarea>
+			<mat-error *ngIf="this.textMessageControl.hasError('required')">{{this.localizationService.getText(3)}}</mat-error>
+		</mat-form-field>
+	</div>
+</div>
+

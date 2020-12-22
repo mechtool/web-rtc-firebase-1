@@ -1,0 +1,13 @@
+<div class="contact-container">
+	<div class="contact-base">
+			<div class="contact-mode-icon"  >
+				<div class="contact-icon-base" [ngSwitch]="this.mode" [style.backgroundColor]="this.context.backColor">
+					<img [src]="this.context.photoURL" class="img-icon" *ngSwitchCase="'icon'" (error)="onError($event)">
+					<div  *ngSwitchCase="'text'" class="icon-block" >{{(this.context.displayName || this.context.userName || this.context.email || this.context.phoneNumber).trim().split('')[0].toUpperCase()}}</div>
+				</div>
+				<div class="user-name-block">
+					<span class="user-name-text">{{this.context.displayName || this.context.userName || this.context.email || this.setFromPhone()}}</span>
+				</div>
+			</div>
+	</div>
+</div>

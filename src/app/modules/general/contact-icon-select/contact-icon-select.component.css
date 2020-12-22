@@ -1,0 +1,71 @@
+:host{
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.36);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+div.icon-select-base{
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+div.icon-select-container{
+    width: 230px;
+    background: white;
+    position: relative;
+}
+div.colors-block, div.icons-block{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+div.colors-block{
+    margin: 16px 0 16px 0;
+}
+div.part-block{
+    padding: 24px;
+}
+div.color-item{
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+div.icon-block-div{
+    position: relative;
+}
+mat-icon.icon-check-img{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    background: #6161618a;
+}
+mat-icon.icon-block-img{
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+button.ready-button{
+    width: 100%;
+}
+div.icon-select-download-indicator{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 3;
+    justify-content: center;
+    background-color: rgba(132, 132, 132, 0.44);
+}

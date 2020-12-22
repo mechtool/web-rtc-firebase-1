@@ -57,6 +57,10 @@ export namespace Actions {      //hardware
 	static readonly type = '[App] Change AppUser';
 	constructor(public appUser: Contact | null) {}
     }
+    export class AppUserChangedAction {
+	static readonly type = '[App] Change AppUser Data';
+	constructor(public appUserChanged: Contact ) {}
+    }
     export class AppPermissionsAction {
 	static readonly type = '[App] Set Permissions';
 	constructor(public permissions: any[]) {}

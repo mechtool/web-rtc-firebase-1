@@ -1,0 +1,14 @@
+<div class="settings-container">
+	<div class="settings-base">
+		<mat-toolbar class="settings-toolbar" color="primary">
+			<span class="settings-header component-header">{{this.settingsHeader}}</span>
+			<span class="example-spacer"></span>
+			<button [attr.aria-label]="button.tip" mat-icon-button *ngFor="let button of buttons" [routerLink]="button.link" [routerLinkActive]="'active'"  [matTooltip]="button.tip" >
+				<mat-icon class="settings-icon" [svgIcon]="button.icon"></mat-icon>
+			</button>
+		</mat-toolbar>
+		<div class="settings-outlet" [@fadeAnimation]="this.appContext.getState(outletSettings)">
+			<router-outlet #outletSettings="outlet"></router-outlet>
+		</div>
+	</div>
+</div>

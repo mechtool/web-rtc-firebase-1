@@ -1,0 +1,29 @@
+div.contacts-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    height: 100%;
+    align-items: stretch;
+    box-sizing: border-box;
+}
+div.search-container{
+    overflow: hidden;
+    height: 0;
+}
+div.content-base-contacts{
+    width: 100%;
+    flex: 1 1 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+div.contacts-base{
+    padding: 16px;
+    flex : 1 1 0  ;
+    overflow-y: auto;
+}
+button mat-icon{
+    position: relative;
+    top: -2px;
+}

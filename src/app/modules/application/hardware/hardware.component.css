@@ -1,0 +1,73 @@
+div.hardware-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: #e8e8e8;
+}
+div.hardware-base{
+    width: 70%;
+    max-width: 300px;
+    padding: 48px;
+    color: #8b0000;
+    box-shadow: 0 0px 20px 0px rgba(120, 120, 120, 0.32);
+    background-color: white;
+}
+div.icons-block{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+mat-icon{
+    width: 80%;
+    height: 80%;
+}
+p.text{
+    text-align: justify;
+}
+.button{
+    margin-top: 16px;
+    width: 100%;
+}
+p.text2{
+    border: 1px solid #6e0b0b;
+    padding: 16px;
+}
+
+@media  (max-width: 400px) and (orientation: portrait){
+    div.hardware-container{
+        display: block;
+    }
+    div.hardware-base{
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+}
+@media  (max-height: 500px) and (orientation: landscape){
+    div.hardware-container{
+        display: block;
+    }
+    div.hardware-inner{
+        max-width: 400px;
+    }
+    div.hardware-base{
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+}

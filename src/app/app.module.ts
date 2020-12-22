@@ -31,6 +31,9 @@ import {WebRtcService} from "./services/web-rtc.service";
 import {SmsService} from "./services/sms.service";
 import {SwUpdateService} from "./services/sw-update.service";
 import {StreamRecorderService} from "./services/stream-recorder.service";
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,13 @@ import {StreamRecorderService} from "./services/stream-recorder.service";
       ServiceWorkerModule.register('firebase-messaging-sw.js', { enabled: true, registrationStrategy : 'registerImmediately' , scope : './' }),
       MaterialModule,
       GeneralModule,
+      ReactiveFormsModule,
+      FormlyModule.forRoot({
+	  validationMessages: [
+	      { name: 'required', message: 'Обязательный' },
+	  ],
+	  extras: { lazyRender: true } }),
+      FormlyMaterialModule,
   ],
   providers: [
     {provide: ErrorHandler, useClass: AppErrorHandler},

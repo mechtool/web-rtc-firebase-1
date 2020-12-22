@@ -1,0 +1,78 @@
+div.video-chat-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    height: 100%;
+}
+div.video-base-contacts{
+    padding: 16px;
+}
+div.search-container{
+    overflow: hidden;
+    height: 0;
+}
+div.buttons-base{
+    position: relative;
+    overflow: visible;
+    z-index: 2;
+}
+button mat-icon{
+    position: relative;
+    top: -2px;
+}
+div.start-button-block{
+    flex: 1 1 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+div.text-field-container{
+    padding: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+button.start-video-button{
+    width: 100px;
+    height: 100px;
+}
+mat-icon.start-video-button-icon{
+    width: 40px;
+    height: 40px;
+}
+mat-icon.start-text-icon{
+    animation: rotateIcon 500ms forwards !important;
+}
+button.start-text-button{
+    position: absolute;
+    top: -25%;
+    left: 25%;
+    animation: rotateButton .5s forwards !important;
+    animation-iteration-count: 1;
+    transform-origin: 50% 75px;
+}
+mat-form-field.text-area-field{
+    width: 100%;
+    max-width: 360px;
+}
+textarea.textarea{
+  font-size: 20px!important;
+}
+
+@keyframes rotateIcon {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(-130deg);
+    }
+}
+@keyframes rotateButton {
+    0%{
+        transform: rotate(0);
+    }
+    100%{
+        transform: rotate(130deg);
+    }
+}

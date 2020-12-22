@@ -17,6 +17,7 @@ const routes: Routes = [
 	    {path : 'text-message',  loadChildren : ()=> import('./text-message/text-message.module').then(m => m.TextMessageModule), data : {type : 'text-message'}},
 	    {path : 'main', loadChildren : ()=> import('./main/main.module').then(m => m.MainModule), data : {type : 'main'}},
 	    {path : '', pathMatch : 'full', redirectTo : 'splash'},
+	    {path : '**', pathMatch : 'full', redirectTo : 'splash'},
 	]}
 ];
 

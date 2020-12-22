@@ -1,0 +1,22 @@
+div.advanced-settings-container{
+    display: flex;
+    justify-content: stretch;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+div.settings-base{
+    flex: 1 1 0;
+    padding: 16px;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+
+:host /deep/ mat-icon.exitButton{
+    position: relative;
+    left: 3px;
+}
+

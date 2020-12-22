@@ -53,7 +53,7 @@ export class Contact extends User{
     
     constructor(prop) {
         super(prop);
-	this.displayName = prop.displayName || this.isAnonymous ? 'Anonim' : '';
+	this.displayName = prop.displayName || this.isAnonymous ? 'Anonymous' : '';
 	this.secondName = prop.secondName || '';
 	this.thirdName = prop.thirdName || '';
         this.backColor = prop.backColor ||  ColorThemeService.colorBase[1].backgroundColor;

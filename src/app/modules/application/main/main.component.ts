@@ -1,6 +1,6 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AppContextService} from "../../../services/app-context.service";
-import { Router} from "@angular/router";
+import {Router, RouterOutlet} from "@angular/router";
 import {fadeAnimation} from "../../../animations/animations";
 import {BreakpointObserver,  BreakpointState} from "@angular/cdk/layout";
 import { LocalizationService } from 'src/app/services/localization.service';
@@ -22,6 +22,7 @@ export class MainComponent implements OnInit, OnDestroy{
     {label : this.localizationService.getText(74), icon : 'start-phone', link : '/application/main/new-message'},
     {label : this.localizationService.getText(73), icon : 'start-settings',  link : '/application/main/settings'},
     ];
+    @ViewChild(RouterOutlet) outlet: RouterOutlet
     
     constructor(
         public localizationService : LocalizationService,

@@ -107,16 +107,14 @@ export class AppComponent implements OnInit, OnDestroy{
 		{name : 'start-messages', link: '/assets/icons/comment.svg'},
 		{name : 'start-settings', link: '/assets/icons/settings.svg'},
 		{name : 'start-phone', link: '/assets/icons/phone.svg'},
-		//{name : 'start-home', link: '/assets/icons/home.svg'},
 		{name : 'settings2', link: '/assets/icons/gear.svg'},
 		{name : 'exit', link: '/assets/icons/exit.svg'},
-		//{name : 'chrome', link: '/assets/icons/chrome.svg'},
+		{name : 'sms', link: '/assets/icons/SMS.svg'},
 		{name : 'wifi', link: '/assets/icons/wifi.svg'},
 		{name : 'visibility', link: '/assets/icons/visibility.svg'},
 		{name : 'visibility-off', link: '/assets/icons/visibility_off.svg'},
 		{name : 'phone', link: '/assets/icons/phone1.svg'},
 		{name : 'message', link: '/assets/icons/message.svg'},
-	//	{name : 'play', link: '/assets/icons/multimedia.svg'},
 		{name : 'delete', link: '/assets/icons/close.svg'},
 		{name : 'plus', link: '/assets/icons/plus.svg'},
 		{name : 'check', link: '/assets/icons/tick.svg'},
@@ -134,24 +132,30 @@ export class AppComponent implements OnInit, OnDestroy{
 	    }) ;
 	    //Подписка на изменение пользователя
 	    this.subscribes.push(this.appUser$.subscribe(appUser => {
-		    //Пользователь вошел в приложение
-		    if (appUser && appUser.uid && this.router.url.indexOf('application/main/contact-detail') < 0) {
-				this.zone.run(()=> this.router.navigate(['application', 'splash'] )
-					.then(()=>{this.store.dispatch(new StartedStatusAction(true))})
-					.catch(err => console.log(err)));
-		    } else if (appUser === null) {
-				//todo Реализовать проверку параметра вызова на случай входа в приложение через мобильную ссылку
-				//todo Пользователь вышел из приложения (или еще не вошел), запустить функции отчистки несохраняемых данных
-				//Перейти на страницу авторизации
-				this.zone.run(() => this.router.navigate(['authorization', 'enter'])
-					.then(() => {
-					this.store.dispatch(new StartedStatusAction(false))
-					})
-					.catch(err => {
-					    console.log(err)
-					}));
-				}
-	    })) ;
+		//Пользователь вошел в приложение
+		if (appUser && appUser.uid && this.router.url.indexOf('application/main/contact-detail') < 0) {
+		    this.zone.run(() => this.router.navigate(['application', 'splash'])
+			.then(() => {
+			    this.store.dispatch(new StartedStatusAction(true));
+			})
+			.catch(err =>
+			    console.log(err))
+		    );
+		} else if (appUser === null) {
+		    //todo Реализовать проверку параметра вызова на случай входа в приложение через мобильную ссылку
+		    //todo Пользователь вышел из приложения (или еще не вошел), запустить функции отчистки несохраняемых данных
+		    //Перейти на страницу авторизации
+		    this.zone.run(() => this.router.navigate(['authorization', 'enter'])
+			.then(() => {
+			    this.store.dispatch(new StartedStatusAction(false))
+			})
+			.catch(err => {
+			    console.log(err)
+			}));
+		} else if (this.router.url.length === 1 && /\//.test(this.router.url)) {
+		    this.zone.run(() => this.router.navigate(['authorization']))
+		}
+	    }));
 	    //Подписка на изменение цветовой темы
 	    this.subscribes.push(this.appColorClass$.subscribe((appColorClass : any) => {
 		if (!/null|undefined/.test(appColorClass)) {

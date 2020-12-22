@@ -1,0 +1,8 @@
+<div class="advanced-settings-container" >
+	<div class="settings-base">
+		<div *ngFor="let sett of this.settings; let inx=index" [style.backgroundColor]="this.colorService.getNeededColor(inx)">
+			<app-setting-item *ngIf="sett.type !== 'divider'" [context]="sett"></app-setting-item>
+			<app-settings-divider *ngIf="sett.type == 'divider'" [context]="sett" [style.backgroundColor]="this.colorService.getThemeColor('highlight')"></app-settings-divider>
+		</div>
+	</div>
+</div>
