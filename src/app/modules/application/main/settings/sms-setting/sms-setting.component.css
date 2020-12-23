@@ -37,15 +37,14 @@ div.alert-block{
     line-height: 20px;
     font-size: 16px!important
 }
-img.pay-money-button{
-    width: 30%;
-    min-width: 200px;
+mat-icon.pay-money-button{
+    width: 40%;
+    height: 40%;
 }
 div.input-block{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-self: center;
-    background: #e7ebeb;
 }
 div.formly-input-block{
     display: flex;

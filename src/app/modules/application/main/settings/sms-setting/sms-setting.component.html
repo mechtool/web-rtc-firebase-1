@@ -12,7 +12,7 @@
 			<div class="formly-icon-base">
 				<formly-form [form]="this.form" [model]="this.model"  [fields]="[this.fields[0]]"></formly-form>
 				<div class="input-block">
-					<img class="pay-money-button" src="/assets/gif/pay.gif">
+					<mat-icon class="pay-money-button"  color="primary" svgIcon="payment-method"></mat-icon>
 					<div class="formly-input-block">
 						<formly-form class="formly-input-content" [form]="this.form" [model]="this.model" [fields]="[this.fields[1]]"></formly-form>
 						<button class="help-button" mat-icon-button color="primary" (click)="onIconClick()" >

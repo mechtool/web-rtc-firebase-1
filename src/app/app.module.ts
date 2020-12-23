@@ -34,6 +34,7 @@ import {StreamRecorderService} from "./services/stream-recorder.service";
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
+import {BreakPointService} from "./services/break-point.service";
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
       ReactiveFormsModule,
       FormlyModule.forRoot({
 	  validationMessages: [
-	      { name: 'required', message: 'Обязательный' },
+	      { name: 'required', message: 'Только цифры. Обязательный' },
 	  ],
 	  extras: { lazyRender: true } }),
       FormlyMaterialModule,
@@ -77,6 +78,7 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
       SmsService,
       SwUpdateService,
       StreamRecorderService,
+      BreakPointService,
   ],
   bootstrap: [AppComponent]
 })

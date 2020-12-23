@@ -31,6 +31,7 @@ import {Actions} from "./store/actions";
 import StartedStatusAction = Actions.StartedStatusAction;
 import ChangeDetectorAction = Actions.ChangeDetectorAction;
 import {SwUpdateService} from "./services/sw-update.service";
+import {BreakPointService} from "./services/break-point.service";
 
 @Component({
   selector: 'app-root',
@@ -77,6 +78,7 @@ export class AppComponent implements OnInit, OnDestroy{
 	public hardwareService : HardwareService,
 	public settingsDefaultService : SettingsDefaultService,
 	public swUpdateService : SwUpdateService,
+	public breakPointService : BreakPointService,
 	public router : Router,
 	public zone : NgZone,
 	public store : Store,
@@ -122,6 +124,7 @@ export class AppComponent implements OnInit, OnDestroy{
 		{name : 'search', link: '/assets/icons/search.svg'},
 		{name : 'help', link: '/assets/icons/question.svg'},
 		{name : 'sound', link: '/assets/icons/sound.svg'},
+		{name : 'payment-method', link: '/assets/icons/payment-method.svg'},
 	 
 		{name : '0', link: '/assets/icons/paper-plane.svg'},
 		{name : '1', link: '/assets/icons/video-camera.svg'},
