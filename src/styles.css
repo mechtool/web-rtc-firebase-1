@@ -80,12 +80,6 @@ span.mat-badge-content{
 .component-header{
     font-size: 18px!important;
 }
-mat-radio-group{
-    outline: none;
-}
 
-formly-field.sourceMoney mat-radio-button.mat-radio-button{
-    margin-right: 16px!important;
-}
 
 

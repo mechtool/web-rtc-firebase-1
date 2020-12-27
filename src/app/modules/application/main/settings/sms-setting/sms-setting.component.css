@@ -1,15 +1,13 @@
 *.red {
     background-color: red;
 }
-div.sms-setting-base,
-div.sms-setting-container{
-    height: 100%;
-}
 div.sms-setting-base{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-self: center;
+}
+div.sms-setting-base,
+div.sms-setting-container{
+    height: 100%;
 }
 div.sm-setting-form-content{
     padding: 32px;
@@ -17,8 +15,13 @@ div.sm-setting-form-content{
     display: flex;
     flex-direction: column;
 }
-mat-radio-button{
-    margin-right: 16px;
+:host::ng-deep formly-form mat-radio-group.mat-radio-group{
+    display: flex;
+    flex-direction: column;
+    outline: none;
+}
+:host::ng-deep formly-form mat-radio-button{
+    margin-bottom: 8px;
 }
 mat-toolbar.alert-toolbar{
     white-space: normal!important;
@@ -37,14 +40,15 @@ div.alert-block{
     line-height: 20px;
     font-size: 16px!important
 }
-mat-icon.pay-money-button{
-    width: 40%;
-    height: 40%;
-}
 div.input-block{
     display: flex;
     justify-content: space-around;
     align-self: center;
+}
+div.formly-icon-base{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 div.formly-input-block{
     display: flex;
@@ -57,5 +61,23 @@ button.pay-button{
 }
 button.help-button{
     margin: 0 8px;
+}
+div.icon-container{
+    flex: 1 1 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+mat-icon.pay-money-button{
+    width: 70%;
+    height: 70%;
+}
+@media (max-width: 480px) and (orientation: portrait){
+
+    div.formly-icon-base{
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 

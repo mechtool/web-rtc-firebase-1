@@ -8,6 +8,7 @@ import {Select} from "@ngxs/store";
 import {Observable} from "rxjs";
 import {Contact} from "../../../../../classes/Classes";
 import {ColorThemeService} from "../../../../../services/color-theme.service";
+import {BreakPointService} from "../../../../../services/break-point.service";
 
 //Ссылка для получения текущего курса валют с сайта центрального банка России
 //https://www.cbr-xml-daily.ru/latest.js
@@ -62,11 +63,11 @@ export class SmsSettingComponent implements  OnDestroy {
     
     constructor(
         public smsService : SmsService,
+        public breakPointService : BreakPointService,
         public colorThemeService : ColorThemeService,
         public localizationService : LocalizationService) {
+        console.log('')
     }
-    
-
     
     ngOnDestroy() {
         
