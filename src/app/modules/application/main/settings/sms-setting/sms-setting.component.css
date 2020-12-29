@@ -9,7 +9,7 @@ div.sms-setting-base,
 div.sms-setting-container{
     height: 100%;
 }
-div.sm-setting-form-content{
+div.sms-setting-form-content{
     padding: 32px;
     flex: 1 1 0;
     display: flex;
@@ -50,18 +50,21 @@ div.formly-icon-base{
     justify-content: space-between;
     align-items: center;
 }
+div.sms-total{
+    margin-right: 8px;
+}
 div.formly-input-block{
     display: flex;
     justify-content: center;
     align-items: center;
-    
+}
+div.formly-icon{
+  display: flex;
 }
 button.pay-button{
     margin-top: 16px;
 }
-button.help-button{
-    margin: 0 8px;
-}
+
 div.icon-container{
     flex: 1 1 0;
     position: relative;
@@ -69,11 +72,18 @@ div.icon-container{
     justify-content: center;
     align-items: center;
 }
+mat-icon.iconHelp{
+    position: relative;
+    top: -2px;
+}
 mat-icon.pay-money-button{
     width: 70%;
     height: 70%;
 }
 @media (max-width: 480px) and (orientation: portrait){
+    div.sms-setting-form-content {
+        padding: 0 32px 32px 32px;
+    }
 
     div.formly-icon-base{
         flex-direction: column;

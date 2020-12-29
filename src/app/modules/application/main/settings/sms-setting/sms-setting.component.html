@@ -3,26 +3,31 @@
 		<mat-toolbar color="primary">
 			<span class="sms-setting-header">{{this.smsHeader}}</span>
 			<span class="example-spacer"></span>
-			<span class="sms-total">{{this.localizationService.getText(124)+' '+(this.appUserChanged$ | async).smsAccount.sum + ' ' + (this.appUserChanged$ | async).smsAccount.currency}}</span>
+			<div class="sms-total">{{this.localizationService.getText(124)+' '+(this.appUserChanged$ | async).smsAccount.sum + ' ' + (this.appUserChanged$ | async).smsAccount.currency}}</div>
+			<button class="help-button" mat-icon-button (click)="onIconClick()" >
+				<mat-icon class="iconHelp"  [matTooltip]="this.localizationService.getText(125)" matSuffix [svgIcon]="'help'" ></mat-icon>
+			</button>
 		</mat-toolbar>
-		<div class="sm-setting-form-content">
-			<mat-toolbar class="alert-toolbar" color="primary" *ngIf="!this.breakPointService.is360">
+		<div class="sms-setting-form-content">
+			<mat-toolbar class="alert-toolbar" color="primary" *ngIf="!this.breakPointService.is480">
 				<div class="alert-block">{{this.localizationService.getText(123)}}</div>
 			</mat-toolbar>
 			<div class="formly-icon-base">
-				<formly-form [form]="this.form" [model]="this.model"  [fields]="[this.fields[0]]"></formly-form>
+				<div class="formly-icon">
+					<formly-form [form]="this.form" [model]="this.model"  [fields]="[this.fields[0]]"></formly-form>
+					<div class="icon-container" *ngIf="this.breakPointService.is480">
+						<mat-icon  class="pay-money-button"  color="primary" svgIcon="payment-method"></mat-icon>
+					</div>
+				</div>
 				<div class="input-block">
 					<div class="formly-input-block">
 						<formly-form class="formly-input-content" [form]="this.form" [model]="this.model" [fields]="[this.fields[1]]"></formly-form>
-						<button class="help-button" mat-icon-button color="primary" (click)="onIconClick()" >
-							<mat-icon  [matTooltip]="this.localizationService.getText(125)" matSuffix [svgIcon]="'help'" ></mat-icon>
-						</button>
 					</div>
 				</div>
 			</div>
 			<button class="pay-button" mat-raised-button color="primary" [disabled]="this.form.invalid || this.parseFloat(this.model.sum) === 0 ">Перевести</button>
-			<div class="icon-container">
-				<mat-icon *ngIf="this.breakPointService.portrait" class="pay-money-button"  color="primary" svgIcon="payment-method"></mat-icon>
+			<div class="icon-container" *ngIf="!this.breakPointService.is480">
+				<mat-icon  class="pay-money-button"  color="primary" svgIcon="payment-method"></mat-icon>
 			</div>
 		</div>
 	</div>
