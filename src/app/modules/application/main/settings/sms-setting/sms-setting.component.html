@@ -4,18 +4,24 @@
 			<span class="sms-setting-header">{{this.smsHeader}}</span>
 			<span class="example-spacer"></span>
 			<div class="sms-total">{{this.localizationService.getText(124)+' '+(this.appUserChanged$ | async).smsAccount.sum + ' ' + (this.appUserChanged$ | async).smsAccount.currency}}</div>
-			<button class="help-button" mat-icon-button (click)="onIconClick()" >
+			<button class="help-button" mat-icon-button (click)="onHelpIconClick()" >
 				<mat-icon class="iconHelp"  [matTooltip]="this.localizationService.getText(125)" matSuffix [svgIcon]="'help'" ></mat-icon>
 			</button>
 		</mat-toolbar>
 		<div class="sms-setting-form-content">
-			<mat-toolbar class="alert-toolbar" color="primary" *ngIf="!this.breakPointService.is480">
+			<mat-toolbar class="alert-toolbar" color="primary" *ngIf="!this.breakPointService.is360 && this.breakPointService.portrait">
 				<div class="alert-block">{{this.localizationService.getText(123)}}</div>
 			</mat-toolbar>
+			<div class="top-sms-banner" [@fadeAnimation]="this.isBanner" >
+				<div class="isBanner" *ngIf="this.isBanner">
+					<ng-container ></ng-container>
+					<div class="sms-rates"></div>
+				</div>
+			</div>
 			<div class="formly-icon-base">
 				<div class="formly-icon">
 					<formly-form [form]="this.form" [model]="this.model"  [fields]="[this.fields[0]]"></formly-form>
-					<div class="icon-container" *ngIf="this.breakPointService.is480">
+					<div class="icon-container" *ngIf="this.breakPointService.is360">
 						<mat-icon  class="pay-money-button"  color="primary" svgIcon="payment-method"></mat-icon>
 					</div>
 				</div>
@@ -26,7 +32,7 @@
 				</div>
 			</div>
 			<button class="pay-button" mat-raised-button color="primary" [disabled]="this.form.invalid || this.parseFloat(this.model.sum) === 0 ">Перевести</button>
-			<div class="icon-container" *ngIf="!this.breakPointService.is480">
+			<div class="icon-container" *ngIf="!this.breakPointService.is360">
 				<mat-icon  class="pay-money-button"  color="primary" svgIcon="payment-method"></mat-icon>
 			</div>
 		</div>

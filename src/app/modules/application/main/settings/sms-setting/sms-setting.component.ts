@@ -9,6 +9,7 @@ import {Observable} from "rxjs";
 import {Contact} from "../../../../../classes/Classes";
 import {ColorThemeService} from "../../../../../services/color-theme.service";
 import {BreakPointService} from "../../../../../services/break-point.service";
+import {fadeAnimation} from "../../../../../animations/animations";
 
 //Ссылка для получения текущего курса валют с сайта центрального банка России
 //https://www.cbr-xml-daily.ru/latest.js
@@ -17,14 +18,16 @@ import {BreakPointService} from "../../../../../services/break-point.service";
 @Component({
   selector: 'app-sms-setting',
   templateUrl: './sms-setting.component.html',
-  styleUrls: ['./sms-setting.component.css']
+  styleUrls: ['./sms-setting.component.css'] ,
+  animations : [fadeAnimation],
 })
 export class SmsSettingComponent implements  OnDestroy {
     
     public subscribes = [];
+    public isBanner = false;
     public parseFloat = parseFloat;
-    public smsHeader = this.localizationService.getText(122);
     public form = new FormGroup({});
+    public smsHeader = this.localizationService.getText(122);
     public model: any = {radio : 'AC', sum : '', receiver :'41001510819857', formcomment :'Пополнение счета SMS сообщений', 'short-dest' : 'Пополнение счета SMS сообщений', label : 'order_id' , 'quickpay-form' : 'shop', targets : 'Оплата SMS трафика', 'need-fio' : false, 'need-email' :false, 'need-phone' :false, 'need-address' :false};
     public fields: FormlyFieldConfig[] = [
 	{
@@ -78,7 +81,7 @@ export class SmsSettingComponent implements  OnDestroy {
 	console.log(this.model);
     }
     
-    onIconClick(){
-    
+    onHelpIconClick(){
+        this.isBanner = !this.isBanner;
     }
 }
