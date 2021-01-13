@@ -13,9 +13,11 @@ div.sms-setting-base{
     justify-content: center;
     align-items: center;
 }
-
+pre{
+    margin: 0;
+}
 div.sms-setting-form-content{
-    padding: 32px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,7 +44,7 @@ div.alert-block{
 div.formly-icon-base{
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: stretch;
     flex-direction: column;
 }
 mat-toolbar.sms-toolbar{
@@ -61,11 +63,20 @@ div.formly-input-block{
     justify-content: space-between;
     align-items: flex-end;
 }
+div.comission{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
 div.formly-icon{
   display: flex;
 }
 button.pay-button{
     margin-top: 16px;
+}
+span.resultText{
+    font-size: 20px !important;
+    font-weight: 500;
 }
 
 div.icon-container{

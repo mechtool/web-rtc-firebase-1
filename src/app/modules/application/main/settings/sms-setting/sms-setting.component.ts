@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 import {LocalizationService} from "../../../../../services/localization.service";
 import {FormGroup} from "@angular/forms";
 import {FormlyFieldConfig} from "@ngx-formly/core";
@@ -22,8 +22,8 @@ export class SmsSettingComponent implements  OnDestroy {
     
     public subscribes = [];
     public parseFloat = parseFloat;
-    public totalSum;
-    public comission;
+    public totalSum : any = 0.0;
+    public comission : any = 0.0;
     public f = new FormGroup({});
     public smsHeader = this.localizationService.getText(122);
 	public user = this.store.selectSnapshot(AppContextState.appUser);
@@ -35,13 +35,13 @@ export class SmsSettingComponent implements  OnDestroy {
 	    className : 'sourceMoney',
 	    templateOptions: {
 	        description: 'Источник списания',
-		attributes : {"aria-label" : "Источник списания"},
-		required: true,
-		options: [
-		    { value: 'PC', label: 'ЮMoney', comission : 0.005},
-		    { value: 'AC', label: 'Банковской картой' , comission : 0.02},
-		    { value: '"MC', label: 'С баланса мобильного', comission : 1 },
-		],
+			attributes : {"aria-label" : "Источник списания"},
+			required: true,
+			options: [
+				{ value: 'PC', label: 'ЮMoney', comission : 0.005},
+				{ value: 'AC', label: 'Банковской картой' , comission : 0.02},
+				{ value: '"MC', label: 'С баланса мобильного', comission : 0 },
+			],
 	    },
 	},
 	{
@@ -53,6 +53,7 @@ export class SmsSettingComponent implements  OnDestroy {
 		description: 'Сумма перевода',
 		attributes : {"aria-label" : "Сумма перевода"},
 		required: true,
+		maxLength : 3,
 		placeholder : '0',
 		pattern : "[0-9]+" ,
 		keydown : (field, event)=>{
@@ -66,6 +67,7 @@ export class SmsSettingComponent implements  OnDestroy {
     constructor(
     	public store : Store,
         public breakPoints : BreakPointService,
+        public changeRef : ChangeDetectorRef,
         public colorTheme : ColorThemeService,
         public localizationService : LocalizationService) {
         console.log('')
@@ -74,6 +76,15 @@ export class SmsSettingComponent implements  OnDestroy {
     ngOnDestroy() {
         this.subscribes.forEach(sub => sub.unsubscribe());
     }
+	onChangeRadio($event){
+    	this.onChangeSum($event);
+	}
+
+	onChangeSum($event){
+    	this.comission = ((this.fields[0].templateOptions.options as []).find((op: any) => op.value === `${$event.radio}`) as any).comission;
+		this.totalSum = (+$event.sum - (+$event.sum * this.comission)).toFixed(2);
+		this.changeRef.detectChanges();
+	}
 
 
 }
