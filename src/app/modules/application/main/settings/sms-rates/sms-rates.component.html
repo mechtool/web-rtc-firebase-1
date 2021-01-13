@@ -1,0 +1,11 @@
+<mat-toolbar *ngIf="this.breakPoints.isWidth460" color="primary">{{this.localizationService.getText(126)}}</mat-toolbar>
+<div class="sms-rates-container">
+    <div class="sms-rates-base">
+        <mat-toolbar class="first" color="primary">
+            <p>{{this.localizationService.getText(123)}}</p>
+            <p>Стоимость отправки одного SMS уведомления : 2.5 руб.</p>
+            <p>Валютой перевода является валюта источника средств</p>
+            <button mat-flat-button (click)="onClickButton()">Далее</button>
+        </mat-toolbar>
+    </div>
+</div>

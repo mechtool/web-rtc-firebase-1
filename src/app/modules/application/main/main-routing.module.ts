@@ -11,7 +11,8 @@ const routes: Routes = [
 	    {path : 'announcements',  loadChildren : ()=> import('./announcements/announcements.module').then(m => m.AnnouncementsModule), data : {type : 'announcements'}} ,
 	    {path : 'messages',  loadChildren : ()=> import('./messages/messages.module').then(m => m.MessagesModule), data : {type : 'messages'}} ,
 	    {path : 'sms-setting', loadChildren : ()=> import('./settings/sms-setting/sms-setting.module').then(m => m.SmsSettingModule), data : {type : 'sms-setting'}},
-	    {path : 'new-message',  loadChildren : ()=> import('./new-message/new-message.module').then(m => m.NewMessageModule), data : {type : 'new-message'}} ,
+		{path : 'sms-rates', loadChildren : ()=> import('./settings/sms-rates/sms-rates.module').then(m => m.SmsRatesModule), data : {type : 'sms-rates'}},
+		{path : 'new-message',  loadChildren : ()=> import('./new-message/new-message.module').then(m => m.NewMessageModule), data : {type : 'new-message'}} ,
 	    {path : '', pathMatch : 'full', redirectTo : 'contacts'},
 	]}
 ];

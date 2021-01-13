@@ -1,10 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {fadeAnimation} from "../../../../animations/animations";
 import {AppContextService} from "../../../../services/app-context.service";
-import {NavigationStart, Router} from "@angular/router";
+import { Router} from "@angular/router";
 import { LocalizationService } from 'src/app/services/localization.service';
-import {FormGroup} from "@angular/forms";
-import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 
 @Component({
   selector: 'app-settings',
@@ -25,17 +23,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
       public localizationService : LocalizationService,
       public appContext : AppContextService
   ) {
-      
-      this.subscriptions.push(this.router.events.subscribe(event => {
-	  if (event instanceof NavigationStart) {
-	      this.settingsHeader = `${event.url.indexOf('general') >= 0 ? this.localizationService.getText(80) : (event.url.indexOf('advanced')>= 0 ? this.localizationService.getText(81) : this.localizationService.getText(80))} ${this.localizationService.getText(73).toLowerCase()}`;
-	  }
-      }))
+
   }
 
   ngOnInit(): void {
   }
-  
+    outletActivate($event){
+          let url = this.router.url;
+          this.settingsHeader = `${this.localizationService.getText(url.indexOf('general') >= 0 ? 80 : url.indexOf('advanced') >= 0 ? 81 :  80)}  ${this.localizationService.getText(73).toLowerCase()}`;
+    }
+
   ngOnDestroy() {
       this.subscriptions.forEach(sub => sub.unsubscribe());
   }

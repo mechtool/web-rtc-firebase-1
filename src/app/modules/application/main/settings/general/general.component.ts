@@ -38,7 +38,7 @@ export class GeneralComponent implements OnInit {
 	    select : { options : [{text : 'Ru', disabled : false}, {text : 'En', disabled : false},]}},
 	{type : 'divider', text : 'SMS'},
 	{type : 'button', className : 'sms-button', text : this.localizationService.getText(121), svg : 'sms', disabled: false, listener : ()=>{
-		this.router.navigateByUrl('/application/main/sms-setting');
+		this.router.navigateByUrl('/application/main/sms-rates');
 	    }},
 	{type : 'divider', text : this.localizationService.getText(70)},
 	{type : 'toggle', text : this.localizationService.getText(85), value :  JSON.parse(this.store.selectSnapshot(LocalStorageState.excludeAdded)),  disabled : false, listener : (value)=>{

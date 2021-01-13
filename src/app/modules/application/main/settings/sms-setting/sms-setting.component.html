@@ -1,41 +1,37 @@
 <div class="sms-setting-container">
 	<div class="sms-setting-base">
-		<mat-toolbar color="primary">
+		<mat-toolbar class="sms-toolbar" *ngIf="this.breakPoints.isWidth460" color="primary">
 			<span class="sms-setting-header">{{this.smsHeader}}</span>
 			<span class="example-spacer"></span>
 			<div class="sms-total">{{this.localizationService.getText(124)+' '+(this.appUserChanged$ | async).smsAccount.sum + ' ' + (this.appUserChanged$ | async).smsAccount.currency}}</div>
-			<button class="help-button" mat-icon-button (click)="onHelpIconClick()" >
-				<mat-icon class="iconHelp"  [matTooltip]="this.localizationService.getText(125)" matSuffix [svgIcon]="'help'" ></mat-icon>
-			</button>
 		</mat-toolbar>
-		<div class="sms-setting-form-content">
-			<mat-toolbar class="alert-toolbar" color="primary" *ngIf="!this.breakPointService.is360 && this.breakPointService.portrait">
-				<div class="alert-block">{{this.localizationService.getText(123)}}</div>
-			</mat-toolbar>
-			<div class="top-sms-banner" [@fadeAnimation]="this.isBanner" >
-				<div class="isBanner" *ngIf="this.isBanner">
-					<ng-container ></ng-container>
-					<div class="sms-rates"></div>
-				</div>
-			</div>
+		<div class="sms-setting-form-content" [style.backgroundColor]="this.colorTheme.getThemeColor('highlight')">
 			<div class="formly-icon-base">
 				<div class="formly-icon">
-					<formly-form [form]="this.form" [model]="this.model"  [fields]="[this.fields[0]]"></formly-form>
-					<div class="icon-container" *ngIf="this.breakPointService.is360">
-						<mat-icon  class="pay-money-button"  color="primary" svgIcon="payment-method"></mat-icon>
-					</div>
+					<formly-form [form]="this.f" [model]="this.model"  [fields]="[this.fields[0]]"></formly-form>
 				</div>
 				<div class="input-block">
 					<div class="formly-input-block">
-						<formly-form class="formly-input-content" [form]="this.form" [model]="this.model" [fields]="[this.fields[1]]"></formly-form>
+						<formly-form class="formly-input-content" [form]="this.f" [model]="this.model" [fields]="[this.fields[1]]"></formly-form>
+					    <div class="comission">Итого : {{this.totalSum}}, Комиссия : {{this.comission}}</div>
 					</div>
 				</div>
 			</div>
-			<button class="pay-button" mat-raised-button color="primary" [disabled]="this.form.invalid || this.parseFloat(this.model.sum) === 0 ">Перевести</button>
-			<div class="icon-container" *ngIf="!this.breakPointService.is360">
-				<mat-icon  class="pay-money-button"  color="primary" svgIcon="payment-method"></mat-icon>
-			</div>
+			<button class="pay-button" mat-raised-button color="primary" [disabled]="this.f.invalid || this.parseFloat(this.model.sum) === 0 " (click)="formType.submit()">Перевести</button>
 		</div>
 	</div>
+	<form #formType [formGroup]="this.f" method="POST" action="https://yoomoney.ru/quickpay/confirm.xml">
+		<input type="hidden" name="receiver" [value]="this.model.receiver">
+		<input type="hidden" name="formcomment" [value]="this.model.formcomment">
+		<input type="hidden" name="short-dest" [value]="this.model.formcomment">
+		<input type="hidden" name="label" value="order_id">
+		<input type="hidden" name="quickpay-form" value="shop">
+		<input type="hidden" name="targets" value="транзакция order_id">
+		<input type="hidden" name="sum" [value]="this.f.get('sum').value" data-type="number">
+		<input type="hidden" name="comment" [value]="this.user.uid">
+		<input type="hidden" name="paymentType" [value]="this.f.get('radio').value">
+		<input type="hidden" name="successURL" value="/application/main/sms-setting">
+	</form>
 </div>
+
 

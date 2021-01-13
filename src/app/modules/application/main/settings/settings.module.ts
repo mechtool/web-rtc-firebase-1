@@ -12,6 +12,7 @@ import { AdvancedComponent } from './advanced/advanced.component';
 import {RouterModule} from "@angular/router";
 import {GeneralModule} from "../../../general/general.module";
 import { SmsSettingComponent } from './sms-setting/sms-setting.component';
+import { SmsRatesComponent } from './sms-rates/sms-rates.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { SmsSettingComponent } from './sms-setting/sms-setting.component';
       SettingsComponent,
       GeneralComponent,
       AdvancedComponent,
-      SmsSettingComponent
+      SmsSettingComponent,
+      SmsRatesComponent
   ],
   imports: [
     CommonModule,

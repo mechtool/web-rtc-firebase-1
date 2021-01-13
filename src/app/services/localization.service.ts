@@ -138,7 +138,8 @@ export class LocalizationService {
 	122 : ['Настройка SMS сервиса', 'SMS service settings'],
 	123 : ['Для доступа любого пользователя к функциональности приложения отправки вызывающих SMS сообщений, в случаях установки соединения с не зарегистрированным удаленным пользователем, Вам необходимо пополнить счет оплаты этих сообщений. После пополнения счета, пользователю будет доступен сервис вызова ЛЮБОГО абонента различных телефонных сетей, по номеру его телефона.', 'In order for any user to access the functionality of the application for sending calling SMS messages, in cases of establishing a connection with an unregistered remote user, you need to top up the payment account for these messages. After adding funds to the account, the user will be able to call ANY subscriber of various telephone networks by their phone number.'] ,
 	124 : ['Ваш баланс : ', 'Your balance : '],
-	125 : ['Тарифы', 'Rates']
+	125 : ['Тарифы', 'Rates'],
+	126 : ['Пополнение баланса SMS уведомлений', 'Topping up the balance of SMS notifications'],
     }
   constructor(private store : Store) { }
   
