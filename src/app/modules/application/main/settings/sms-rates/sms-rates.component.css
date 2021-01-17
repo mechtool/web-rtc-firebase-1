@@ -15,6 +15,7 @@ div.sms-rates-container{
 }
 div.sms-rates-base{
     max-width: 500px;
+    box-shadow: 0 0 20px;
 }
 mat-toolbar.first{
     height: auto;

@@ -63,5 +63,18 @@ export class ColorThemeService {
     getNeededColor(index){
 	return 0 === index % 2 ? this.getThemeColor('even') : this.getThemeColor('odd')
     }
+    blackWhite(rgbHex){
+        let rgbObj = this.hexToRgb(rgbHex),
+            sum = Math.round(((parseInt(rgbObj.r +'') * 299) + (parseInt(rgbObj.g +'') * 587) + (parseInt(rgbObj.b +'') * 114)) / 1000);
+        return (sum > 128) ? 'black' : 'white';
+    }
+    hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
 }
 

@@ -21,10 +21,12 @@ import {ColorThemeService} from "../../../../../services/color-theme.service";
 export class SmsSettingComponent implements  OnDestroy {
     
     public subscribes = [];
-    public parseFloat = parseFloat;
+	public spinner = false;
+	public parseFloat = parseFloat;
     public totalSum : any = 0.0;
     public comission : any = 0.0;
     public f = new FormGroup({});
+    public successUrl = window.location.origin +'/application/main/sms-setting';
     public smsHeader = this.localizationService.getText(122);
 	public user = this.store.selectSnapshot(AppContextState.appUser);
 	public model: any = {radio : 'AC', sum : '', receiver :'41001510819857', formcomment :'Пополнение счета SMS сообщений', 'short-dest' : 'Пополнение счета SMS сообщений', label : 'order_id' , quickpayForm : 'shop', targets : 'Оплата SMS трафика', 'need-fio' : false, 'need-email' :false, 'need-phone' :false, 'need-address' :false};
@@ -70,7 +72,6 @@ export class SmsSettingComponent implements  OnDestroy {
         public changeRef : ChangeDetectorRef,
         public colorTheme : ColorThemeService,
         public localizationService : LocalizationService) {
-        console.log('')
     }
     
     ngOnDestroy() {
@@ -84,6 +85,11 @@ export class SmsSettingComponent implements  OnDestroy {
     	this.comission = ((this.fields[0].templateOptions.options as []).find((op: any) => op.value === `${$event.radio}`) as any).comission;
 		this.totalSum = (+$event.sum - (+$event.sum * this.comission)).toFixed(2);
 		this.changeRef.detectChanges();
+	}
+	onSubmit(formType){
+    	this.spinner = true;
+    	this.changeRef.detectChanges();
+		formType.submit()
 	}
 
 
