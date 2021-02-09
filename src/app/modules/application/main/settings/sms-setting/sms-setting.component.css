@@ -33,8 +33,10 @@ div.sms-setting-form-content{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     position: relative;
-    box-shadow: 0 0 20px;
+    box-shadow: 0 0 20px #cdcdcd;
+    background: white;
 }
 :host::ng-deep formly-form mat-radio-group.mat-radio-group{
     display: flex;
@@ -74,7 +76,7 @@ div.formly-input-block{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: flex-start;
 }
 div.comission{
     display: flex;
@@ -86,6 +88,7 @@ div.formly-icon{
 }
 button.pay-button{
     margin-top: 16px;
+    width: 100%;
 }
 span.resultText{
     font-size: 20px !important;
@@ -102,6 +105,11 @@ div.icon-container{
 mat-icon.iconHelp{
     position: relative;
     top: -2px;
+}
+@media all and (max-width:460px){
+    div.sms-setting-form-content{
+        box-shadow: initial;
+    }
 }
 
 @media all and (min-width:460px) {

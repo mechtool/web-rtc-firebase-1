@@ -70,7 +70,7 @@ export class AppContextService {
 	if(this.recaptchaVerifier && this.recaptchaVerifier.clear) {
 	    this.recaptchaVerifier.clear();
 	    this.recaptchaVerifier = undefined;
-	}
+	    }
     }
 
     

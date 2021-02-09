@@ -1,41 +1,44 @@
 <div class="sms-setting-container">
 	<div class="sms-setting-base">
-		<mat-toolbar class="sms-toolbar" *ngIf="this.breakPoints.isWidth460" color="primary">
+		<mat-toolbar class="sms-toolbar" *ngIf="!this.breakPoints.isHeight460 " color="primary">
 			<span class="sms-setting-header">{{this.smsHeader}}</span>
 			<span class="example-spacer"></span>
 			<div class="sms-total">{{this.localizationService.getText(124)+' '+(this.appUserChanged$ | async).smsAccount.sum + ' ' + (this.appUserChanged$ | async).smsAccount.currency}}</div>
 		</mat-toolbar>
-		<div class="sms-setting-form-content" [style.backgroundColor]="this.colorTheme.getThemeColor('backgroundColor')" [style.color]="this.colorTheme.blackWhite(this.colorTheme.getThemeColor('backgroundColor'))">
-			<div class="formly-icon-base">
-				<div class="formly-icon">
-					<formly-form [form]="this.f" [model]="this.model"  [fields]="[this.fields[0]]" (modelChange)="this.onChangeRadio($event)"></formly-form>
-				</div>
-				<div class="input-block">
-					<div class="formly-input-block">
-						<formly-form class="formly-input-content" [form]="this.f" [model]="this.model" [fields]="[this.fields[1]]" (modelChange)="this.onChangeSum($event)"></formly-form>
-						<div class="comission" [style.color]="this.colorTheme.blackWhite(this.colorTheme.getThemeColor('backgroundColor'))">
-							<div> Итого : <span class="resultText">{{this.totalSum}} </span></div>
-							<pre> </pre>
-							<div> Комиссия : <span class="resultText">{{this.comission === 0 ? '*': this.comission + '%'}}</span></div>
+		<div class="google-button-block"></div>
+		<div class="yandex-block">
+			<div class="sms-setting-form-content">
+				<div class="formly-icon-base">
+					<div class="formly-icon">
+						<formly-form [form]="this.f" [model]="this.model"  [fields]="[this.fields[0]]" (modelChange)="this.onChangeRadio($event)"></formly-form>
+					</div>
+					<div class="input-block">
+						<div class="formly-input-block">
+							<formly-form class="formly-input-content" [form]="this.f" [model]="this.model" [fields]="[this.fields[1]]" (modelChange)="this.onChangeSum($event)"></formly-form>
+							<div class="comission" >
+								<div> Итого : <span class="resultText">{{this.totalSum}} </span></div>
+								<pre> </pre>
+								<div> Комиссия : <span class="resultText">{{this.comission === 0 ? '*': this.comission + '%'}}</span></div>
+							</div>
 						</div>
 					</div>
 				</div>
+				<button class="pay-button" mat-raised-button color="accent" [disabled]="this.f.invalid || this.parseFloat(this.model.sum) === 0 " (click)="onSubmit(formType)">Перевести</button>
 			</div>
-			<button class="pay-button" mat-raised-button color="accent" [disabled]="this.f.invalid || this.parseFloat(this.model.sum) === 0 " (click)="onSubmit(formType)">Перевести</button>
-	</div>
-</div>
-	<form #formType [formGroup]="this.f" method="POST" action="https://yoomoney.ru/quickpay/confirm.xml">
-		<input type="hidden" name="receiver" [value]="this.model.receiver">
-		<input type="hidden" name="formcomment" [value]="this.model.formcomment">
-		<input type="hidden" name="short-dest" [value]="this.model.formcomment">
-		<input type="hidden" name="label" value="order_id">
-		<input type="hidden" name="quickpay-form" value="shop">
-		<input type="hidden" name="targets" value="транзакция order_id">
-		<input type="hidden" name="sum" [value]="this.f.get('sum').value" data-type="number">
-		<input type="hidden" name="comment" [value]="this.user.uid">
-		<input type="hidden" name="paymentType" [value]="this.f.get('radio').value">
-		<input type="hidden" name="successURL" [value]="this.successUrl">
-	</form>
+			<form #formType [formGroup]="this.f" method="POST" action="https://yoomoney.ru/quickpay/confirm.xml">
+				<input type="hidden" name="receiver" [value]="this.model.receiver">
+				<input type="hidden" name="formcomment" [value]="this.model.formcomment">
+				<input type="hidden" name="short-dest" [value]="this.model.formcomment">
+				<input type="hidden" name="label" value="order_id">
+				<input type="hidden" name="quickpay-form" value="shop">
+				<input type="hidden" name="targets" value="транзакция order_id">
+				<input type="hidden" name="sum" [value]="this.f.get('sum').value" data-type="number">
+				<input type="hidden" name="comment" [value]="this.user.uid">
+				<input type="hidden" name="paymentType" [value]="this.f.get('radio').value">
+				<input type="hidden" name="successURL" [value]="this.successUrl">
+			</form>
+		</div>
+  </div>
 </div>
 <div class="spinner-block" *ngIf="this.spinner">
 	<mat-spinner diameter="50"></mat-spinner>

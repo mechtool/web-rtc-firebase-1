@@ -140,6 +140,7 @@ export class LocalizationService {
 	124 : ['Ваш баланс : ', 'Your balance : '],
 	125 : ['Тарифы', 'Rates'],
 	126 : ['Пополнение баланса SMS уведомлений', 'Topping up the balance of SMS notifications'],
+	127 : ['Выберите платежную технологию', 'Choose a payment technology'],
     }
   constructor(private store : Store) { }
   

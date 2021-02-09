@@ -23,8 +23,8 @@ export class ColorThemeService {
    };
     public static colorBase = [
 	{colorClass : 'first-theme', backgroundColor : '#fdd835', color : '#e9b13b', light: 'rgba(255,234,65,0.71)', active : false, iconColor : '#000', even : 'rgba(255,238,88,0.15)', odd : 'rgba(255,238,88,0.19)', highlight : 'rgba(255,238,88,0.36)'},
-	{colorClass : 'second-theme', backgroundColor : '#2196f3', color : '#1083cd',light: 'rgba(66,165,245,0.51)',  light1: "rgba(255,239,149,0.71)", active : true, iconColor : '#fff', even : 'rgba(66,165,245,0.07)', odd : 'rgba(66,165,245,0.12)', highlight : 'rgba(66,165,245,0.26)'},
-	{colorClass : 'third-theme', backgroundColor : '#ff5722', color : '#c13316',light: 'rgba(255,114,69,0.51)', active : false, iconColor : '#fff', even : 'rgba(255,112,67,0.05)', odd : 'rgba(255,112,67,0.11)', highlight : 'rgba(255,112,67,0.25)'},
+	{colorClass : 'second-theme', backgroundColor : '#2196f3', color : '#1083cd', light: 'rgba(66,165,245,0.51)',  light1: "rgb(237,249,255)", active : true, iconColor : '#fff', even : 'rgba(66,165,245,0.07)', odd : 'rgba(66,165,245,0.12)', highlight : 'rgba(66,165,245,0.26)'},
+	{colorClass : 'third-theme', backgroundColor : '#ff5722', color : '#c13316',light: 'rgba(255,114,69,0.51)', active : false, iconColor : '#ffffff', even : 'rgba(255,112,67,0.05)', odd : 'rgba(255,112,67,0.11)', highlight : 'rgba(255,112,67,0.25)'},
 	{colorClass : 'forth-theme', backgroundColor : '#3f51b5', color : 'rgba(39,23,135,0.92)',light: 'rgba(92,107,192,0.51)', active : false, iconColor : '#fff', even : 'rgba(92,107,192,0.07)', odd : 'rgba(92,107,192,0.11)', highlight : 'rgba(92,107,192,0.26)'},
     ] ;
     
@@ -70,11 +70,19 @@ export class ColorThemeService {
     }
     hexToRgb(hex) {
         var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? {
-            r: parseInt(result[1], 16),
-            g: parseInt(result[2], 16),
-            b: parseInt(result[3], 16)
-        } : null;
+       if(result){
+            return {
+                r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16)
+            }
+        } else {
+           let colorArr = hex.substring(hex.indexOf('(') +1 , hex.indexOf(')')).split(',') ;
+           return {
+               r : parseInt(colorArr[0], 16),
+               g : parseInt(colorArr[1], 16),
+               b : parseInt(colorArr[2] , 16)
+           };
+       }
     }
+
 }
 

@@ -9,7 +9,7 @@ import {BreakPointService} from "../../../../../services/break-point.service";
   styleUrls: ['./sms-rates.component.css']
 })
 export class SmsRatesComponent implements OnInit {
-
+  boxShadow = '0 0 20px #919191';
   constructor(
       public router : Router,
       public breakPoints : BreakPointService,
